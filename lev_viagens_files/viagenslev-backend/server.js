@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
+const { v2: cloudinary } = require("cloudinary");
+const streamifier = require("streamifier");
+
 
 
 const pool = require('./database/conexao');
