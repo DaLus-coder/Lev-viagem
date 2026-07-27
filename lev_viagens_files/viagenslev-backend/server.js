@@ -3,14 +3,13 @@ const cors = require('cors');
 require('dotenv').config();
 
 const { v2: cloudinary } = require("cloudinary");
-const streamifier = require("streamifier");
+const multer = require("multer");
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
-
 
 const pool = require('./database/conexao');
 
@@ -152,8 +151,6 @@ app.delete('/api/admin/cards/:id', async (req, res) => {
    UPLOAD DE IMAGEM (MULTER)
 ========================================================= */
 
-const multer = require('multer');
-const path = require('path');
 
 const upload = multer({
     storage: multer.memoryStorage()
@@ -175,13 +172,11 @@ app.post("/api/upload", upload.single("imagem"), async (req, res) => {
         }
 
         const resultado = await cloudinary.uploader.upload(
-
             `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
-
             {
-                folder: "lev-viagens"
+                folder: "lev-viagens",
+                resource_type: "image"
             }
-
         );
 
         res.json({
