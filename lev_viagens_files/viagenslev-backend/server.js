@@ -5,6 +5,11 @@ require('dotenv').config();
 const { v2: cloudinary } = require("cloudinary");
 const streamifier = require("streamifier");
 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 
 const pool = require('./database/conexao');
@@ -150,51 +155,49 @@ app.delete('/api/admin/cards/:id', async (req, res) => {
 const multer = require('multer');
 const path = require('path');
 
-const fs = require('fs');
-
-const uploadDir = path.join(__dirname, 'uploads');
-
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Configuração de armazenamento de arquivos
-const storage = multer.diskStorage({
-
-    // pasta de destino
-    destination: (req, file, cb) => {
-        cb(null, uploadDir);
-    },
-
-    // nome do arquivo salvo
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
+const upload = multer({
+    storage: multer.memoryStorage()
 });
-
-
-// inicialização do multer
-const upload = multer({ storage });
-
-// libera acesso público à pasta uploads
-app.use('/uploads', express.static(uploadDir));
 
 
 /* =========================================================
    ROTA - UPLOAD DE IMAGEM
 ========================================================= */
 
-app.post('/api/upload', upload.single('imagem'), (req, res) => {
+app.post("/api/upload", upload.single("imagem"), async (req, res) => {
 
-    // valida se arquivo foi enviado
-    if (!req.file) {
-        return res.status(400).json({ error: "nenhum arquivo enviado" });
+    try {
+
+        if (!req.file) {
+            return res.status(400).json({
+                error: "Nenhuma imagem enviada"
+            });
+        }
+
+        const resultado = await cloudinary.uploader.upload(
+
+            `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
+
+            {
+                folder: "lev-viagens"
+            }
+
+        );
+
+        res.json({
+            url: resultado.secure_url
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).json({
+            error: err.message
+        });
+
     }
 
-    // retorna URL pública da imagem
-    res.json({
-        url: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
-    });
 });
 
 
