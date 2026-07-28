@@ -273,3 +273,71 @@ function logoutAdmin(){
     window.location.href =
         "login.html";
 }
+
+async function carregarClientes(){
+
+    const res = await fetch(
+        `${API}/admin/clientes`
+    );
+
+    const clientes = await res.json();
+
+
+    const tabela =
+        document.getElementById("listaClientes");
+
+
+    tabela.innerHTML = "";
+
+
+    clientes.forEach(cliente=>{
+
+
+        tabela.innerHTML += `
+
+        <tr>
+
+            <td>${cliente.id}</td>
+
+            <td>${cliente.nome}</td>
+
+            <td>${cliente.email}</td>
+
+            <td>${cliente.cidade || "-"}</td>
+
+            <td>${cliente.telefone || "-"}</td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+function mostrarSecao(secao){
+
+
+    const cards =
+    document.getElementById("cards");
+
+
+    const clientes =
+    document.getElementById("clientes");
+
+
+    if(secao === "clientes"){
+
+        cards.style.display="none";
+        clientes.style.display="block";
+
+        carregarClientes();
+
+    }else{
+
+        cards.style.display="block";
+        clientes.style.display="none";
+
+    }
+
+}

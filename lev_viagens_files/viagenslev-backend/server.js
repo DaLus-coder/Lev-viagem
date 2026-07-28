@@ -195,6 +195,38 @@ app.post("/api/upload", upload.single("imagem"), async (req, res) => {
 
 });
 
+/* =========================================================
+   CLIENTES CADASTRADOS
+========================================================= */
+
+app.get('/api/admin/clientes', async (req,res)=>{
+
+    try{
+
+        const [clientes] = await pool.query(
+            `
+            SELECT id,nome,email,cidade,telefone 
+            FROM usuarios
+            ORDER BY id DESC
+            `
+        );
+
+
+        res.json(clientes);
+
+
+    }catch(err){
+
+        console.error(err);
+
+        res.status(500).json({
+            error: err.message
+        });
+
+    }
+
+});
+
 
 /* =========================================================
    INICIALIZAÇÃO DO SERVIDOR

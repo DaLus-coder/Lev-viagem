@@ -271,9 +271,17 @@
 
         <h2>CMS ViagensLev</h2>
 
-        <button class="nav-item active">Cards</button>
-        <button class="nav-item">Clientes</button>
-        <button class="nav-item">Reservas</button>
+        <button class="nav-item active" onclick="mostrarSecao('cards')">
+            Cards
+        </button>
+
+        <button class="nav-item" onclick="mostrarSecao('clientes')">
+            Clientes
+        </button>
+
+        <button class="nav-item">
+            Reservas
+        </button>
 
     </aside>
 
@@ -314,6 +322,30 @@
 
         <!-- LISTA DE CARDS -->
         <div id="cards"></div>
+
+        <!-- ================= CLIENTES ================= -->
+
+<div id="clientes" style="display:none;">
+
+    <h1>Clientes cadastrados</h1>
+
+    <table border="1" width="100%" style="margin-top:20px;background:white;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Cidade</th>
+                <th>Telefone</th>
+            </tr>
+        </thead>
+
+        <tbody id="listaClientes">
+
+        </tbody>
+    </table>
+
+</div>
 
     </div>
 
