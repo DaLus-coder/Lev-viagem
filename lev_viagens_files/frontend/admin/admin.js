@@ -10,6 +10,7 @@ const API = "https://lev-viagem.onrender.com/api";
 
 // ID do card em edição (null = criando novo)
 let editId = null;
+let clienteEditId = null;
 
 
 /* =========================================================
@@ -284,10 +285,10 @@ async function carregarClientes(){
 
 
     const tabela =
-        document.getElementById("listaClientes");
+    document.getElementById("listaClientes");
 
 
-    tabela.innerHTML = "";
+    tabela.innerHTML="";
 
 
     clientes.forEach(cliente=>{
@@ -307,9 +308,29 @@ async function carregarClientes(){
 
             <td>${cliente.telefone || "-"}</td>
 
+
+            <td>
+
+                <button 
+                class="edit-btn"
+                onclick="editarCliente(${cliente.id})">
+                    Editar
+                </button>
+
+
+                <button
+                class="delete-btn"
+                onclick="excluirCliente(${cliente.id})">
+                    Excluir
+                </button>
+
+            </td>
+
+
         </tr>
 
         `;
+
 
     });
 
@@ -339,5 +360,121 @@ function mostrarSecao(secao){
         clientes.style.display="none";
 
     }
+
+}
+
+async function editarCliente(id){
+
+
+    const res = await fetch(
+        `${API}/admin/clientes`
+    );
+
+
+    const clientes = await res.json();
+
+
+    const cliente = clientes.find(
+        c => c.id === id
+    );
+
+
+    clienteEditId = id;
+
+
+    document.getElementById("clienteNome").value =
+    cliente.nome;
+
+
+    document.getElementById("clienteEmail").value =
+    cliente.email;
+
+
+    document.getElementById("clienteCidade").value =
+    cliente.cidade || "";
+
+
+    document.getElementById("clienteTelefone").value =
+    cliente.telefone || "";
+
+
+}
+
+async function salvarCliente(){
+
+
+    if(!clienteEditId){
+
+        alert("Selecione um cliente primeiro");
+
+        return;
+
+    }
+
+
+    const dados={
+
+        nome:
+        document.getElementById("clienteNome").value,
+
+
+        email:
+        document.getElementById("clienteEmail").value,
+
+
+        cidade:
+        document.getElementById("clienteCidade").value,
+
+
+        telefone:
+        document.getElementById("clienteTelefone").value
+
+    };
+
+
+    await fetch(
+        `${API}/admin/clientes/${clienteEditId}`,
+        {
+
+        method:"PUT",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:
+        JSON.stringify(dados)
+
+        }
+    );
+
+
+    alert("Cliente atualizado");
+
+
+    clienteEditId=null;
+
+
+    carregarClientes();
+
+}
+
+async function excluirCliente(id){
+
+
+    if(!confirm("Excluir este cliente?"))
+    return;
+
+
+    await fetch(
+        `${API}/admin/clientes/${id}`,
+        {
+            method:"DELETE"
+        }
+    );
+
+
+    carregarClientes();
+
 
 }

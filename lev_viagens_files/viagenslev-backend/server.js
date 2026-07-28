@@ -227,6 +227,99 @@ app.get('/api/admin/clientes', async (req,res)=>{
 
 });
 
+app.put('/api/admin/clientes/:id', async(req,res)=>{
+
+
+    try{
+
+
+        const {id}=req.params;
+
+
+        const {
+            nome,
+            email,
+            cidade,
+            telefone
+        }=req.body;
+
+
+
+        await pool.query(
+
+        `
+        UPDATE usuarios
+        SET nome=?,
+            email=?,
+            cidade=?,
+            telefone=?
+        WHERE id=?
+        `,
+
+        [
+            nome,
+            email,
+            cidade,
+            telefone,
+            id
+        ]
+
+        );
+
+
+        res.json({
+            message:"cliente atualizado"
+        });
+
+
+    }catch(err){
+
+        res.status(500).json({
+            error:err.message
+        });
+
+    }
+
+
+});
+
+app.delete('/api/admin/clientes/:id', async(req,res)=>{
+
+
+    try{
+
+
+        const {id}=req.params;
+
+
+        await pool.query(
+
+        "DELETE FROM usuarios WHERE id=?",
+
+        [id]
+
+        );
+
+
+        res.json({
+            message:"cliente removido"
+        });
+
+
+
+    }catch(err){
+
+
+        res.status(500).json({
+            error:err.message
+        });
+
+
+    }
+
+
+});
+
 
 /* =========================================================
    INICIALIZAÇÃO DO SERVIDOR

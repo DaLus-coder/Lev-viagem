@@ -325,27 +325,48 @@
 
         <!-- ================= CLIENTES ================= -->
 
-<div id="clientes" style="display:none;">
+        <div id="clientes" style="display:none;">
 
-    <h1>Clientes cadastrados</h1>
+            <h1>Clientes cadastrados</h1>
 
-    <table border="1" width="100%" style="margin-top:20px;background:white;">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Cidade</th>
-                <th>Telefone</th>
-            </tr>
-        </thead>
+            <table border="1" width="100%" style="margin-top:20px;background:white;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Cidade</th>
+                        <th>Telefone</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
 
-        <tbody id="listaClientes">
+                <div style="margin-top:30px">
 
-        </tbody>
-    </table>
+                    <h2>Editar cliente</h2>
 
-</div>
+                    <input id="clienteNome" placeholder="Nome">
+
+                    <input id="clienteEmail" placeholder="Email">
+
+                    <input id="clienteCidade" placeholder="Cidade">
+
+                    <input id="clienteTelefone" placeholder="Telefone">
+
+
+                    <button class="save-btn" onclick="salvarCliente()">
+                        Salvar alterações
+                    </button>
+
+
+                </div>
+
+                <tbody id="listaClientes">
+
+                </tbody>
+            </table>
+
+        </div>
 
     </div>
 
