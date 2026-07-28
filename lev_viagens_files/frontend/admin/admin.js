@@ -339,25 +339,51 @@ async function carregarClientes(){
 function mostrarSecao(secao){
 
 
-    const cards =
-    document.getElementById("cards");
+    const secaoCards =
+    document.getElementById("secaoCards");
 
 
     const clientes =
     document.getElementById("clientes");
 
 
+    const botoes =
+    document.querySelectorAll(".nav-item");
+
+
+
+    // remove amarelo de todos
+
+    botoes.forEach(botao=>{
+        botao.classList.remove("active");
+    });
+
+
+
     if(secao === "clientes"){
 
-        cards.style.display="none";
+
+        secaoCards.style.display="none";
+
         clientes.style.display="block";
+
+
+        botoes[1].classList.add("active");
+
 
         carregarClientes();
 
+
     }else{
 
-        cards.style.display="block";
+
+        secaoCards.style.display="block";
+
         clientes.style.display="none";
+
+
+        botoes[0].classList.add("active");
+
 
     }
 

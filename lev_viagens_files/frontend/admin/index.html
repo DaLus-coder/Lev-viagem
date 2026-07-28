@@ -253,122 +253,301 @@
 
 <body>
 
-    <!-- =====================================================
-         OVERLAY (FECHAR MENU MOBILE)
-    ===================================================== -->
+    <!-- OVERLAY -->
     <div class="overlay" id="overlay"></div>
 
-    <!-- botão do menu mobile -->
-    <button class="menu-toggle" id="menuToggle">☰</button>
 
-    <!-- =====================================================
-         SIDEBAR
-    ===================================================== -->
+    <!-- MENU MOBILE -->
+    <button class="menu-toggle" id="menuToggle">
+        ☰
+    </button>
+
+
+
+    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
+
+
         <button onclick="logoutAdmin()">
             Sair
         </button>
 
-        <h2>CMS ViagensLev</h2>
+
+        <h2>
+            CMS ViagensLev
+        </h2>
+
+
 
         <button class="nav-item active" onclick="mostrarSecao('cards')">
+
             Cards
+
         </button>
+
+
 
         <button class="nav-item" onclick="mostrarSecao('clientes')">
+
             Clientes
+
         </button>
 
+
+
         <button class="nav-item">
+
             Reservas
+
         </button>
+
 
     </aside>
 
-    <!-- =====================================================
-         CONTEÚDO PRINCIPAL
-    ===================================================== -->
+
+
+
+
+    <!-- CONTEÚDO -->
     <div class="cms-content">
 
-        <h1>Gerenciar Cards</h1>
-
-        <!-- FORMULÁRIO DE CADASTRO -->
-        <input id="titulo" placeholder="Título">
-        <input id="descricao" placeholder="Descrição">
-
-        <!-- UPLOAD DE IMAGEM -->
-        <input type="file" id="file">
-        <button type="button" onclick="uploadImagem()" class="upload-btn">
-            Upload imagem
-        </button>
-
-        <!-- URL DA IMAGEM -->
-        <input id="imagem">
-
-        <!-- CATEGORIA -->
-        <select id="categoria">
-            <option value="alugueis">Alugueis</option>
-            <option value="experiencias">Experiencias</option>
-            <option value="gastronomia">Gastronomia</option>
-        </select>
-
-        <!-- TEXTO DO BOTÃO -->
-        <input id="botao_texto" placeholder="Texto botão">
-
-        <!-- SALVAR -->
-        <button class="save-btn" onclick="saveCard()">Salvar card</button>
-
-        <hr>
-
-        <!-- LISTA DE CARDS -->
-        <div id="cards"></div>
-
-        <!-- ================= CLIENTES ================= -->
-
-        <div id="clientes" style="display:none;">
-
-            <h1>Clientes cadastrados</h1>
-
-            <table border="1" width="100%" style="margin-top:20px;background:white;">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Cidade</th>
-                        <th>Telefone</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-
-                <div style="margin-top:30px">
-
-                    <h2>Editar cliente</h2>
-
-                    <input id="clienteNome" placeholder="Nome">
-
-                    <input id="clienteEmail" placeholder="Email">
-
-                    <input id="clienteCidade" placeholder="Cidade">
-
-                    <input id="clienteTelefone" placeholder="Telefone">
 
 
-                    <button class="save-btn" onclick="salvarCliente()">
-                        Salvar alterações
-                    </button>
 
 
-                </div>
+        <!-- =========================
+     SEÇÃO CARDS
+========================= -->
 
-                <tbody id="listaClientes">
+        <div id="secaoCards">
 
-                </tbody>
-            </table>
+
+            <h1>
+                Gerenciar Cards
+            </h1>
+
+
+
+            <input id="titulo" placeholder="Título">
+
+
+
+            <input id="descricao" placeholder="Descrição">
+
+
+
+
+
+            <input type="file" id="file">
+
+
+
+            <button type="button" onclick="uploadImagem()" class="upload-btn">
+
+                Upload imagem
+
+            </button>
+
+
+
+
+
+            <input id="imagem">
+
+
+
+
+
+            <select id="categoria">
+
+
+                <option value="alugueis">
+                    Alugueis
+                </option>
+
+
+                <option value="experiencias">
+                    Experiencias
+                </option>
+
+
+                <option value="gastronomia">
+                    Gastronomia
+                </option>
+
+
+            </select>
+
+
+
+
+
+            <input id="botao_texto" placeholder="Texto botão">
+
+
+
+
+
+            <button class="save-btn" onclick="saveCard()">
+
+                Salvar card
+
+            </button>
+
+
+
+
+            <hr>
+
+
+
+
+
+            <!-- LISTAGEM DOS CARDS -->
+
+            <div id="cards"></div>
+
+
 
         </div>
 
+
+
+
+
+
+
+
+        <!-- =========================
+     SEÇÃO CLIENTES
+========================= -->
+
+
+        <div id="clientes" style="display:none;">
+
+
+
+            <h1>
+                Clientes cadastrados
+            </h1>
+
+
+
+
+            <h2>
+                Editar cliente
+            </h2>
+
+
+
+
+            <input id="clienteNome" placeholder="Nome">
+
+
+
+            <input id="clienteEmail" placeholder="Email">
+
+
+
+            <input id="clienteCidade" placeholder="Cidade">
+
+
+
+            <input id="clienteTelefone" placeholder="Telefone">
+
+
+
+
+
+            <button class="save-btn" onclick="salvarCliente()">
+
+                Salvar alterações
+
+            </button>
+
+
+
+
+
+
+
+            <table border="1" width="100%" style="margin-top:20px;background:white;">
+
+
+
+                <thead>
+
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+
+                        <th>
+                            Nome
+                        </th>
+
+
+                        <th>
+                            Email
+                        </th>
+
+
+                        <th>
+                            Cidade
+                        </th>
+
+
+                        <th>
+                            Telefone
+                        </th>
+
+
+                        <th>
+                            Ações
+                        </th>
+
+
+                    </tr>
+
+
+                </thead>
+
+
+
+
+
+                <tbody id="listaClientes">
+
+
+                </tbody>
+
+
+
+
+
+            </table>
+
+
+
+
+        </div>
+
+
+
+
+
+
     </div>
+
+
+
+
+
+    <script src="admin.js"></script>
+
 
     <!-- SCRIPT PRINCIPAL -->
     <script src="admin.js"></script>
