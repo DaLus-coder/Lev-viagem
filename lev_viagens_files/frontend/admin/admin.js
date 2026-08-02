@@ -156,7 +156,13 @@ async function edit(id) {
     const cards = await res.json();
 
     // Encontra card pelo ID
-    const c = cards.find(x => x.id === id);
+    const c = cards.find(x => Number(x.id) === Number(id));
+
+    if (!c) {
+    console.error("Card não encontrado. ID recebido:", id);
+    console.log(cards);
+    return;
+}
 
     // Marca como edição
     editId = id;
