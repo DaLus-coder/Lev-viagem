@@ -13,13 +13,13 @@ cloudinary.config({
 
 const pool = require('./database/conexao');
 
-pool.getConnection()
-    .then(connection => {
-        console.log("MYSQL CONECTOU COM SUCESSO");
-        connection.release();
+pool.connect()
+    .then(client => {
+        console.log("POSTGRES CONECTADO");
+        client.release();
     })
-    .catch(error => {
-        console.log("MYSQL FALHOU:", error);
+    .catch(err => {
+        console.error("POSTGRES FALHOU:", err);
     });
 
 const app = express();
@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
 });
 
 pool.on('error', (err) => {
-    console.error('ERRO NO POOL MYSQL:', err);
+    console.error("ERRO NO POSTGRES:", err);
 });
 
 /* =========================================================
@@ -53,8 +53,8 @@ app.get('/api/cards', async (req, res) => {
 
     try {
 
-        const [rows] = await pool.query(
-            'SELECT * FROM cards ORDER BY id DESC'
+        const { rows } = await pool.query(
+            "SELECT * FROM cards"
         );
 
         res.json(rows);
@@ -86,7 +86,7 @@ app.post('/api/admin/cards', async (req, res) => {
         // Insere novo card no banco
         await pool.query(
             `INSERT INTO cards (titulo, descricao, imagem, categoria, botao_texto)
-             VALUES (?, ?, ?, ?, ?)`,
+            VALUES ($1,$2,$3,$4,$5)`,
             [titulo, descricao, imagem, categoria, botao_texto]
         );
 
@@ -111,8 +111,12 @@ app.put('/api/admin/cards/:id', async (req, res) => {
         // Atualiza card existente
         await pool.query(
             `UPDATE cards 
-             SET titulo=?, descricao=?, imagem=?, categoria=?, botao_texto=?
-             WHERE id=?`,
+             SET titulo=$1,
+descricao=$2,
+imagem=$3,
+categoria=$4,
+botao_texto=$5
+WHERE id=$6`,
             [titulo, descricao, imagem, categoria, botao_texto, id]
         );
 
@@ -135,7 +139,7 @@ app.delete('/api/admin/cards/:id', async (req, res) => {
 
         // Remove card do banco
         await pool.query(
-            'DELETE FROM cards WHERE id=?',
+            'DELETE FROM cards WHERE id=$1',
             [id]
         );
 
@@ -199,11 +203,11 @@ app.post("/api/upload", upload.single("imagem"), async (req, res) => {
    CLIENTES CADASTRADOS
 ========================================================= */
 
-app.get('/api/admin/clientes', async (req,res)=>{
+app.get('/api/admin/clientes', async (req, res) => {
 
-    try{
+    try {
 
-        const [clientes] = await pool.query(
+        const { rows: clientes } = await pool.query(
             `
             SELECT id,nome,email,cidade,telefone 
             FROM usuarios
@@ -215,7 +219,7 @@ app.get('/api/admin/clientes', async (req,res)=>{
         res.json(clientes);
 
 
-    }catch(err){
+    } catch (err) {
 
         console.error(err);
 
@@ -227,13 +231,13 @@ app.get('/api/admin/clientes', async (req,res)=>{
 
 });
 
-app.put('/api/admin/clientes/:id', async(req,res)=>{
+app.put('/api/admin/clientes/:id', async (req, res) => {
 
 
-    try{
+    try {
 
 
-        const {id}=req.params;
+        const { id } = req.params;
 
 
         const {
@@ -241,41 +245,41 @@ app.put('/api/admin/clientes/:id', async(req,res)=>{
             email,
             cidade,
             telefone
-        }=req.body;
+        } = req.body;
 
 
 
         await pool.query(
 
-        `
+            `
         UPDATE usuarios
-        SET nome=?,
-            email=?,
-            cidade=?,
-            telefone=?
-        WHERE id=?
+        SET nome=$1,
+            email=$2,
+            cidade=$3,
+            telefone=$4
+        WHERE id=$5
         `,
 
-        [
-            nome,
-            email,
-            cidade,
-            telefone,
-            id
-        ]
+            [
+                nome,
+                email,
+                cidade,
+                telefone,
+                id
+            ]
 
         );
 
 
         res.json({
-            message:"cliente atualizado"
+            message: "cliente atualizado"
         });
 
 
-    }catch(err){
+    } catch (err) {
 
         res.status(500).json({
-            error:err.message
+            error: err.message
         });
 
     }
@@ -283,35 +287,35 @@ app.put('/api/admin/clientes/:id', async(req,res)=>{
 
 });
 
-app.delete('/api/admin/clientes/:id', async(req,res)=>{
+app.delete('/api/admin/clientes/:id', async (req, res) => {
 
 
-    try{
+    try {
 
 
-        const {id}=req.params;
+        const { id } = req.params;
 
 
         await pool.query(
 
-        "DELETE FROM usuarios WHERE id=?",
+            "DELETE FROM usuarios WHERE id=$1",
 
-        [id]
+            [id]
 
         );
 
 
         res.json({
-            message:"cliente removido"
+            message: "cliente removido"
         });
 
 
 
-    }catch(err){
+    } catch (err) {
 
 
         res.status(500).json({
-            error:err.message
+            error: err.message
         });
 
 
@@ -339,8 +343,8 @@ app.post('/api/auth/register', async (req, res) => {
     try {
         const { nome, email, senha, cidade, telefone } = req.body;
 
-        const [user] = await pool.query(
-            "SELECT * FROM usuarios WHERE email = ?",
+        const { rows: user } = await pool.query(
+            "SELECT * FROM usuarios WHERE email = $1",
             [email]
         );
 
@@ -350,7 +354,7 @@ app.post('/api/auth/register', async (req, res) => {
 
         await pool.query(
             `INSERT INTO usuarios (nome, email, senha, cidade, telefone)
-             VALUES (?, ?, ?, ?, ?)`,
+             VALUES ($1, $2, $3, $4, $5)`,
             [nome, email, senha, cidade, telefone]
         );
 
@@ -376,8 +380,8 @@ app.post('/api/auth/login', async (req, res) => {
     try {
         const { email, senha } = req.body;
 
-        const [rows] = await pool.query(
-            "SELECT * FROM usuarios WHERE email = ? AND senha = ?",
+        const { rows } = await pool.query(
+            "SELECT * FROM usuarios WHERE email = $1 AND senha = $2",
             [email, senha]
         );
 
@@ -401,8 +405,8 @@ app.post('/api/login', async (req, res) => {
 
     try {
 
-        const [rows] = await pool.query(
-            'SELECT * FROM usuarios WHERE email = ? AND senha = ?',
+        const { rows } = await pool.query(
+            'SELECT * FROM usuarios WHERE email = $1 AND senha = $2',
             [email, senha]
         );
 
@@ -427,7 +431,7 @@ app.post('/api/register', async (req, res) => {
 
         await pool.query(
             `INSERT INTO usuarios (nome, email, senha, cidade, telefone)
-             VALUES (?, ?, ?, ?, ?)`,
+             VALUES ($1, $2, $3, $4, $5)`,
             [nome, email, senha, cidade, telefone]
         );
 
@@ -442,8 +446,8 @@ app.post('/api/admin/login', async (req, res) => {
 
     const { usuario, senha } = req.body;
 
-    const [rows] = await pool.query(
-        'SELECT * FROM admins WHERE usuario = ? AND senha = ?',
+    const {rows} = await pool.query(
+        'SELECT * FROM admins WHERE usuario = $1 AND senha = $2',
         [usuario, senha]
     );
 
