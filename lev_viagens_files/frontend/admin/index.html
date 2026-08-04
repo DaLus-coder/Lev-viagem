@@ -232,7 +232,7 @@
 
         @media(max-width:768px) {
 
-
+            
             .cms-content input,
             .cms-content select,
             .cms-content button {
@@ -243,10 +243,25 @@
 
             }
 
+            .categoria-cards {
 
-        }
+                grid-template-columns: 1fr;
 
-        @media(max-width:768px) {
+            }
+
+
+            .card-admin {
+
+                width: 100%;
+
+            }
+
+
+            .card-admin img {
+
+                height: 180px;
+
+            }
 
             .sidebar {
 
@@ -506,11 +521,7 @@
 
         #cards {
 
-            display: grid;
-
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-
-            gap: 15px;
+            width: 100%;
 
             margin-top: 20px;
 
