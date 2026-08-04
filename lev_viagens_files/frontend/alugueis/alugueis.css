@@ -506,40 +506,30 @@ a{
    MINI CARROSSEL
 ========================================================= */
 
-.mini-carousel {
-    position: relative;
-    max-width: 400px;
-    margin: auto;
+
+
+.mini-card{
+
+    width:100%;
+    margin:0;
+
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
 }
 
-.mini-window {
-    overflow: hidden;
+.mini-card img{
+
+    width:100%;
+    height:240px;
+    object-fit:cover;
+
 }
-
-.mini-track {
-    display: flex;
-    transition: transform .4s ease;
-    will-change: transform;
-}
-
-.mini-card {
-    min-width: 75%;
-    margin: 0 2.5%;
-
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    flex-shrink: 0;
-
-    box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
-}
-
-.mini-card img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-}
-
 .mini-card h3 {
     padding: 20px 20px 10px;
 }
@@ -559,37 +549,32 @@ a{
     cursor: pointer;
 }
 
+@media(max-width:768px){
 
-/* =========================================================
-   SETAS MINI CARROSSEL
-========================================================= */
+    .cards-grid{
 
-.mini-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+        grid-template-columns:1fr;
 
-    width: 50px;
-    height: 50px;
+    }
 
-    border: none;
-    border-radius: 50%;
-
-    background: white;
-
-    cursor: pointer;
-    z-index: 5;
-
-    box-shadow: 0 5px 20px rgba(0, 0, 0, .15);
 }
 
-.prev {
-    left: -15px;
+@media(max-width:900px){
+
+    .cards-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
 }
 
-.next {
-    right: -15px;
+@media(max-width:600px){
+
+    .cards-grid{
+        grid-template-columns:1fr;
+    }
+
 }
+
 
 
 /* =========================================================
@@ -616,4 +601,12 @@ a{
     align-items: center;
     justify-content: center;
     gap: 10px;
+}
+
+
+.cards-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:30px;
+    width:100%;
 }

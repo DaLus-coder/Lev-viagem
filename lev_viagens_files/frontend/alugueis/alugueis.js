@@ -10,7 +10,6 @@ window.addEventListener("load", async () => {
     // Inicializa componentes da UI
     initTabs();
     initMainCarousel();
-    initMiniCarousels(); // carrosséis das abas
 
     // Carrega dados do CMS
     await loadCMS();
@@ -137,57 +136,8 @@ function initMainCarousel() {
 }
 
 
-/* =========================================================
-   MINI CARROSSEIS (TABS)
-========================================================= */
 
-function initMiniCarousels() {
 
-    const carousels = document.querySelectorAll(".mini-carousel");
-
-    carousels.forEach(carousel => {
-
-        const track = carousel.querySelector(".mini-track");
-        const prev = carousel.querySelector(".prev");
-        const next = carousel.querySelector(".next");
-
-        if (!track || !prev || !next) return;
-
-        let index = 0;
-
-        // calcula largura real do card
-        function getCardWidth() {
-            const card = track.querySelector(".mini-card");
-            if (!card) return 0;
-            return card.getBoundingClientRect().width + 20; // margem
-        }
-
-        // atualiza posição do carrossel
-        function update() {
-            const width = getCardWidth();
-            track.style.transform = `translateX(-${index * width}px)`;
-        }
-
-        // botão anterior
-        prev.addEventListener("click", () => {
-            const max = track.children.length - 1;
-            index = Math.max(0, index - 1);
-            update();
-        });
-
-        // botão próximo
-        next.addEventListener("click", () => {
-            const max = track.children.length - 1;
-            index = Math.min(max, index + 1);
-            update();
-        });
-
-        // responsividade
-        window.addEventListener("resize", update);
-
-        update();
-    });
-}
 
 
 /* =========================================================
