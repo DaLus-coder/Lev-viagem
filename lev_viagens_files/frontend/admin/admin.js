@@ -42,32 +42,10 @@ overlay.addEventListener("click", () => {
 async function load() {
 
 
-    const alugueis =
-        document.getElementById("listaAlugueis");
-
-
-    const experiencias =
-        document.getElementById("listaExperiencias");
-
-
-    const gastronomia =
-        document.getElementById("listaGastronomia");
-
-
-
     showLoading();
 
 
-
     try {
-
-
-        // placeholders
-
-        alugueis.innerHTML = criarPlaceholders();
-        experiencias.innerHTML = criarPlaceholders();
-        gastronomia.innerHTML = criarPlaceholders();
-
 
 
         const res = await fetch(API + "/cards");
@@ -77,18 +55,21 @@ async function load() {
 
 
 
-        alugueis.innerHTML="";
-        experiencias.innerHTML="";
-        gastronomia.innerHTML="";
+        const alugueis = document.getElementById("listaAlugueis");
+        const experiencias = document.getElementById("listaExperiencias");
+        const gastronomia = document.getElementById("listaGastronomia");
+
+
+        alugueis.innerHTML = "";
+        experiencias.innerHTML = "";
+        gastronomia.innerHTML = "";
 
 
 
         cards.forEach(card => {
 
 
-
             const html = `
-
 
             <div class="card-admin">
 
@@ -102,21 +83,15 @@ async function load() {
                 <div class="card-actions">
 
 
-                    <button 
-                    class="edit-btn"
+                    <button class="edit-btn"
                     onclick="edit(${card.id})">
-
                     Editar
-
                     </button>
 
 
-                    <button 
-                    class="delete-btn"
+                    <button class="delete-btn"
                     onclick="remove(${card.id})">
-
                     Excluir
-
                     </button>
 
 
@@ -124,7 +99,6 @@ async function load() {
 
 
             </div>
-
 
             `;
 
@@ -137,13 +111,11 @@ async function load() {
             }
 
 
-
             if(card.categoria === "experiencias"){
 
                 experiencias.innerHTML += html;
 
             }
-
 
 
             if(card.categoria === "gastronomia"){
@@ -161,7 +133,7 @@ async function load() {
     }
 
 
-    finally{
+    finally {
 
 
         hideLoading();
