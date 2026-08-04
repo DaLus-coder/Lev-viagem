@@ -41,28 +41,136 @@ overlay.addEventListener("click", () => {
 
 async function load() {
 
-    document.getElementById("cards").innerHTML = criarPlaceholders();
+
+    const alugueis =
+        document.getElementById("listaAlugueis");
+
+
+    const experiencias =
+        document.getElementById("listaExperiencias");
+
+
+    const gastronomia =
+        document.getElementById("listaGastronomia");
+
+
 
     showLoading();
 
+
+
     try {
+
+
+        // placeholders
+
+        alugueis.innerHTML = criarPlaceholders();
+        experiencias.innerHTML = criarPlaceholders();
+        gastronomia.innerHTML = criarPlaceholders();
+
+
 
         const res = await fetch(API + "/cards");
 
+
         const cards = await res.json();
 
-        // renderiza os cards
+
+
+        alugueis.innerHTML="";
+        experiencias.innerHTML="";
+        gastronomia.innerHTML="";
+
+
+
+        cards.forEach(card => {
+
+
+
+            const html = `
+
+
+            <div class="card-admin">
+
+
+                <img src="${card.imagem}">
+
+
+                <h4>${card.titulo}</h4>
+
+
+                <div class="card-actions">
+
+
+                    <button 
+                    class="edit-btn"
+                    onclick="edit(${card.id})">
+
+                    Editar
+
+                    </button>
+
+
+                    <button 
+                    class="delete-btn"
+                    onclick="remove(${card.id})">
+
+                    Excluir
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+            `;
+
+
+
+            if(card.categoria === "alugueis"){
+
+                alugueis.innerHTML += html;
+
+            }
+
+
+
+            if(card.categoria === "experiencias"){
+
+                experiencias.innerHTML += html;
+
+            }
+
+
+
+            if(card.categoria === "gastronomia"){
+
+                gastronomia.innerHTML += html;
+
+            }
+
+
+
+        });
+
+
 
     }
 
-    finally {
+
+    finally{
+
 
         hideLoading();
 
+
     }
 
-}
 
+}
 
 /* =========================================================
    SALVAR / CRIAR OU ATUALIZAR CARD (CREATE / UPDATE)
@@ -261,22 +369,88 @@ async function uploadImagem() {
     showLoading();
 
 
-    try{
+    const fileInput = document.getElementById("file");
+
+    const imagemInput = document.getElementById("imagem");
 
 
-        const fileInput = document.getElementById("file");
+
+    if(!fileInput.files.length){
 
 
-        if (!fileInput.files.length){
+        alert("Selecione uma imagem primeiro!");
 
-            alert("Selecione uma imagem primeiro!");
+
+        hideLoading();
+
+        return;
+
+
+    }
+
+
+
+    const formData = new FormData();
+
+
+    formData.append(
+        "imagem",
+        fileInput.files[0]
+    );
+
+
+
+    try {
+
+
+        const res = await fetch(
+            `${API}/upload`,
+            {
+
+                method:"POST",
+
+                body:formData
+
+            }
+        );
+
+
+
+        const data = await res.json();
+
+
+
+        if(!data.url){
+
+
+            alert("Erro no upload");
+
 
             return;
+
 
         }
 
 
-        // resto do código
+
+        imagemInput.value = data.url;
+
+
+
+        alert("Upload concluído!");
+
+
+
+    }
+
+
+    catch(err){
+
+
+        console.error(err);
+
+
+        alert("Erro ao enviar imagem");
 
 
     }
@@ -590,89 +764,6 @@ function criarPlaceholders() {
 
 
     return html;
-
-
-}
-
-//redenriza cards no HTML
-async function load() {
-
-
-    const container = document.getElementById("cards");
-
-
-    container.innerHTML = criarPlaceholders();
-
-
-    showLoading();
-
-
-
-    try {
-
-
-        const res = await fetch(API + "/cards");
-
-
-        const cards = await res.json();
-
-
-
-        container.innerHTML = "";
-
-
-
-        cards.forEach(card => {
-
-
-            container.innerHTML += `
-
-            <div class="card-admin">
-
-
-                <img src="${card.imagem}">
-
-
-                <h4>${card.titulo}</h4>
-
-
-                <div class="card-actions">
-
-
-                <button class="edit-btn"
-                onclick="edit(${card.id})">
-                Editar
-                </button>
-
-
-                <button class="delete-btn"
-                onclick="remove(${card.id})">
-                Excluir
-                </button>
-
-
-                </div>
-
-
-            </div>
-
-            `;
-
-
-        });
-
-
-
-    }
-
-
-    finally {
-
-
-        hideLoading();
-
-
-    }
 
 
 }

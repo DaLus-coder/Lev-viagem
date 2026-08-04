@@ -414,6 +414,18 @@
             margin-top: 20px;
 
         }
+
+        .categoria-cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+
+    gap:15px;
+
+    margin-bottom:30px;
+
+}
     </style>
 </head>
 
@@ -571,7 +583,20 @@
 
             <!-- LISTAGEM DOS CARDS -->
 
-            <div id="cards"></div>
+            <div id="cards">
+
+    <h2>Aluguéis</h2>
+    <div id="listaAlugueis" class="categoria-cards"></div>
+
+
+    <h2>Experiências</h2>
+    <div id="listaExperiencias" class="categoria-cards"></div>
+
+
+    <h2>Gastronomia</h2>
+    <div id="listaGastronomia" class="categoria-cards"></div>
+
+</div>
 
 
 
