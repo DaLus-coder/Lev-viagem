@@ -222,7 +222,70 @@
            RESPONSIVIDADE
         ===================================================== */
 
+        #cards h2 {
+
+            width: 100%;
+
+        }
+
         @media(max-width:768px) {
+
+
+            .cms-content input,
+            .cms-content select,
+            .cms-content button {
+
+                width: 100%;
+
+                margin-bottom: 10px;
+
+            }
+
+
+        }
+
+        @media(max-width:768px) {
+
+            .cms-content {
+
+                padding: 15px;
+
+            }
+
+
+            input,
+            select {
+
+                width: 100%;
+
+            }
+
+            .categoria-cards {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .card-admin {
+
+                width: 100%;
+
+            }
+
+
+            .card-admin img {
+
+                height: 180px;
+
+            }
+
+
+            #cards h2 {
+
+                margin-top: 30px;
+
+            }
 
             .sidebar {
                 left: auto;
@@ -314,7 +377,7 @@
         .card-placeholder {
 
 
-            width: 280px;
+            width: 100%;
 
             height: 350px;
 
@@ -415,17 +478,17 @@
 
         }
 
-        .categoria-cards{
+        .categoria-cards {
 
-    display:grid;
+            display: grid;
 
-    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 
-    gap:15px;
+            gap: 20px;
 
-    margin-bottom:30px;
+            margin-bottom: 40px;
 
-}
+        }
     </style>
 </head>
 
@@ -585,18 +648,18 @@
 
             <div id="cards">
 
-    <h2>Aluguéis</h2>
-    <div id="listaAlugueis" class="categoria-cards"></div>
+                <h2>Aluguéis</h2>
+                <div id="listaAlugueis" class="categoria-cards"></div>
 
 
-    <h2>Experiências</h2>
-    <div id="listaExperiencias" class="categoria-cards"></div>
+                <h2>Experiências</h2>
+                <div id="listaExperiencias" class="categoria-cards"></div>
 
 
-    <h2>Gastronomia</h2>
-    <div id="listaGastronomia" class="categoria-cards"></div>
+                <h2>Gastronomia</h2>
+                <div id="listaGastronomia" class="categoria-cards"></div>
 
-</div>
+            </div>
 
 
 
