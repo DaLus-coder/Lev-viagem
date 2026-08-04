@@ -104,21 +104,21 @@ async function load() {
 
 
 
-            if(card.categoria === "alugueis"){
+            if (card.categoria === "alugueis") {
 
                 alugueis.innerHTML += html;
 
             }
 
 
-            if(card.categoria === "experiencias"){
+            if (card.categoria === "experiencias") {
 
                 experiencias.innerHTML += html;
 
             }
 
 
-            if(card.categoria === "gastronomia"){
+            if (card.categoria === "gastronomia") {
 
                 gastronomia.innerHTML += html;
 
@@ -167,23 +167,23 @@ async function saveCard() {
     // Validação simples
     if (!titulo || !descricao || !imagem || !categoria || !botao_texto) {
 
-    alert("Preencha todos os campos!");
+        alert("Preencha todos os campos!");
 
-    btnSalvar.disabled = false;
-    btnSalvar.innerText = "Salvar";
+        btnSalvar.disabled = false;
+        btnSalvar.innerText = "Salvar";
 
-    return;
-}
+        return;
+    }
 
     // Confirmação do usuário
     if (!confirm("Tem certeza?")) {
 
-    btnSalvar.disabled = false;
-    btnSalvar.innerText = "Salvar";
+        btnSalvar.disabled = false;
+        btnSalvar.innerText = "Salvar";
 
-    return;
+        return;
 
-}
+    }
 
     // Payload enviado ao backend
     const data = { titulo, descricao, imagem, categoria, botao_texto };
@@ -198,47 +198,47 @@ async function saveCard() {
     showLoading();
 
 
-try {
+    try {
 
 
-    await fetch(url, {
+        await fetch(url, {
 
-        method,
+            method,
 
-        headers:{
-            "Content-Type":"application/json"
-        },
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-        body:JSON.stringify(data)
+            body: JSON.stringify(data)
 
-    });
-
-
-    editId = null;
+        });
 
 
-    clear();
+        editId = null;
 
 
-    await load();
+        clear();
 
 
-}
+        await load();
 
 
-finally{
+    }
 
 
-    btnSalvar.disabled = false;
+    finally {
 
 
-    btnSalvar.innerText = "Salvar";
+        btnSalvar.disabled = false;
 
 
-    hideLoading();
+        btnSalvar.innerText = "Salvar";
 
 
-}
+        hideLoading();
+
+
+    }
 }
 
 
@@ -347,7 +347,7 @@ async function uploadImagem() {
 
 
 
-    if(!fileInput.files.length){
+    if (!fileInput.files.length) {
 
 
         alert("Selecione uma imagem primeiro!");
@@ -379,9 +379,9 @@ async function uploadImagem() {
             `${API}/upload`,
             {
 
-                method:"POST",
+                method: "POST",
 
-                body:formData
+                body: formData
 
             }
         );
@@ -392,7 +392,7 @@ async function uploadImagem() {
 
 
 
-        if(!data.url){
+        if (!data.url) {
 
 
             alert("Erro no upload");
@@ -416,7 +416,7 @@ async function uploadImagem() {
     }
 
 
-    catch(err){
+    catch (err) {
 
 
         console.error(err);
@@ -428,7 +428,7 @@ async function uploadImagem() {
     }
 
 
-    finally{
+    finally {
 
 
         hideLoading();
@@ -577,14 +577,25 @@ async function editarCliente(id) {
     const res = await fetch(
         `${API}/admin/clientes`
     );
-
+    console.log("ID recebido:", id);
 
     const clientes = await res.json();
 
+    console.log(clientes);
+    console.log(typeof id);
+    console.log(typeof clientes[0]?.id);
+
 
     const cliente = clientes.find(
-        c => c.id === id
+        c => Number(c.id) === Number(id)
     );
+
+    if (!cliente) {
+        console.log("ID recebido:", id);
+        console.log("Clientes:", clientes);
+        alert("Cliente não encontrado.");
+        return;
+    }
 
 
     clienteEditId = id;
