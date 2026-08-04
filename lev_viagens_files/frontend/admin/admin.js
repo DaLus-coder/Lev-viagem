@@ -1,4 +1,4 @@
-if(localStorage.getItem("adminLogado") !== "true"){
+if (localStorage.getItem("adminLogado") !== "true") {
     window.location.href = "login.html";
 }
 
@@ -41,59 +41,26 @@ overlay.addEventListener("click", () => {
 
 async function load() {
 
-    // Busca todos os cards na API
-    const res = await fetch(API + "/cards");
-    const cards = await res.json();
+    document.getElementById("cards").innerHTML = criarPlaceholders();
 
-    // Container principal onde os cards serão renderizados
-    const container = document.getElementById("cards");
-    container.innerHTML = "";
+    showLoading();
 
-    // Organização por categoria
-    const grupos = {
-        alugueis: [],
-        experiencias: [],
-        gastronomia: []
-    };
+    try {
 
-    // Separa cards por categoria
-    cards.forEach(c => {
-        if (grupos[c.categoria]) grupos[c.categoria].push(c);
-    });
+        const res = await fetch(API + "/cards");
 
-    // Renderiza cada grupo de categoria
-    for (let grupo in grupos) {
+        const cards = await res.json();
 
-        // Título da categoria
-        const title = document.createElement("h2");
-        title.textContent = grupo.toUpperCase();
-        container.appendChild(title);
+        // renderiza os cards
 
-        // Grid dos cards da categoria
-        const grid = document.createElement("div");
-        grid.className = "cards-grid";
-
-        // Criação dos cards individuais
-        grupos[grupo].forEach(c => {
-
-            const div = document.createElement("div");
-            div.className = "card-admin";
-
-            div.innerHTML = `
-                <img src="${c.imagem}">
-                <h4>${c.titulo}</h4>
-
-                <div class="card-actions">
-                    <button class="edit-btn" onclick="edit(${c.id})">Editar</button>
-                    <button class="delete-btn" onclick="remove(${c.id})">Excluir</button>
-                </div>
-            `;
-
-            grid.appendChild(div);
-        });
-
-        container.appendChild(grid);
     }
+
+    finally {
+
+        hideLoading();
+
+    }
+
 }
 
 
@@ -102,6 +69,13 @@ async function load() {
 ========================================================= */
 
 async function saveCard() {
+
+    const btnSalvar = document.getElementById("btnSalvar");
+
+
+    btnSalvar.disabled = true;
+
+    btnSalvar.innerText = "Salvando...";
 
     // Captura valores do formulário
     const titulo = document.getElementById("titulo").value.trim();
@@ -112,12 +86,24 @@ async function saveCard() {
 
     // Validação simples
     if (!titulo || !descricao || !imagem || !categoria || !botao_texto) {
-        alert("Preencha todos os campos!");
-        return;
-    }
+
+    alert("Preencha todos os campos!");
+
+    btnSalvar.disabled = false;
+    btnSalvar.innerText = "Salvar";
+
+    return;
+}
 
     // Confirmação do usuário
-    if (!confirm("Tem certeza?")) return;
+    if (!confirm("Tem certeza?")) {
+
+    btnSalvar.disabled = false;
+    btnSalvar.innerText = "Salvar";
+
+    return;
+
+}
 
     // Payload enviado ao backend
     const data = { titulo, descricao, imagem, categoria, botao_texto };
@@ -129,19 +115,50 @@ async function saveCard() {
 
     const method = editId ? "PUT" : "POST";
 
-    // Envia para API
+    showLoading();
+
+
+try {
+
+
     await fetch(url, {
+
         method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify(data)
+
     });
 
-    // Reset estado de edição
+
     editId = null;
 
-    // Limpa formulário e recarrega lista
+
     clear();
-    load();
+
+
+    await load();
+
+
+}
+
+
+finally{
+
+
+    btnSalvar.disabled = false;
+
+
+    btnSalvar.innerText = "Salvar";
+
+
+    hideLoading();
+
+
+}
 }
 
 
@@ -159,10 +176,10 @@ async function edit(id) {
     const c = cards.find(x => Number(x.id) === Number(id));
 
     if (!c) {
-    console.error("Card não encontrado. ID recebido:", id);
-    console.log(cards);
-    return;
-}
+        console.error("Card não encontrado. ID recebido:", id);
+        console.log(cards);
+        return;
+    }
 
     // Marca como edição
     editId = id;
@@ -182,16 +199,43 @@ async function edit(id) {
 
 async function remove(id) {
 
-    // Confirmação antes de excluir
-    if (!confirm("Excluir card?")) return;
 
-    // Requisição DELETE
-    await fetch(`${API}/admin/cards/${id}`, {
-        method: "DELETE"
-    });
+    showLoading();
 
-    // Atualiza lista
-    load();
+
+
+    try {
+
+
+        await fetch(API + "/admin/cards/" + id, {
+
+
+            method: "DELETE"
+
+
+        });
+
+
+
+        await load();
+
+
+
+    }
+
+
+
+    finally {
+
+
+        hideLoading();
+
+
+
+    }
+
+
+
 }
 
 
@@ -213,54 +257,40 @@ function clear() {
 
 async function uploadImagem() {
 
-    const fileInput = document.getElementById("file");
-    const imagemInput = document.getElementById("imagem");
 
-    // Validação de elementos HTML
-    if (!fileInput) {
-        alert("Input de arquivo não encontrado");
-        return;
-    }
+    showLoading();
 
-    if (!imagemInput) {
-        alert("Input de URL (imagem) não encontrado no HTML");
-        return;
-    }
 
-    // Verifica se arquivo foi selecionado
-    if (!fileInput.files || fileInput.files.length === 0) {
-        alert("Selecione uma imagem primeiro!");
-        return;
-    }
+    try{
 
-    // Cria payload de upload
-    const formData = new FormData();
-    formData.append("imagem", fileInput.files[0]);
 
-    try {
-        // Envia imagem para backend
-        const res = await fetch(`${API}/upload`, {
-            method: "POST",
-            body: formData
-        });
+        const fileInput = document.getElementById("file");
 
-        const data = await res.json();
 
-        // Validação de resposta
-        if (!data.url) {
-            alert("Upload falhou no backend");
+        if (!fileInput.files.length){
+
+            alert("Selecione uma imagem primeiro!");
+
             return;
+
         }
 
-        // Preenche input com URL retornada
-        imagemInput.value = data.url;
 
-        alert("Upload concluído!");
+        // resto do código
 
-    } catch (err) {
-        console.error(err);
-        alert("Erro ao enviar imagem");
+
     }
+
+
+    finally{
+
+
+        hideLoading();
+
+
+    }
+
+
 }
 
 
@@ -271,7 +301,7 @@ async function uploadImagem() {
 // Carrega cards ao abrir página
 load();
 
-function logoutAdmin(){
+function logoutAdmin() {
 
     localStorage.removeItem(
         "adminLogado"
@@ -281,7 +311,7 @@ function logoutAdmin(){
         "login.html";
 }
 
-async function carregarClientes(){
+async function carregarClientes() {
 
     const res = await fetch(
         `${API}/admin/clientes`
@@ -291,13 +321,13 @@ async function carregarClientes(){
 
 
     const tabela =
-    document.getElementById("listaClientes");
+        document.getElementById("listaClientes");
 
 
-    tabela.innerHTML="";
+    tabela.innerHTML = "";
 
 
-    clientes.forEach(cliente=>{
+    clientes.forEach(cliente => {
 
 
         tabela.innerHTML += `
@@ -342,36 +372,36 @@ async function carregarClientes(){
 
 }
 
-function mostrarSecao(secao){
+function mostrarSecao(secao) {
 
 
     const secaoCards =
-    document.getElementById("secaoCards");
+        document.getElementById("secaoCards");
 
 
     const clientes =
-    document.getElementById("clientes");
+        document.getElementById("clientes");
 
 
     const botoes =
-    document.querySelectorAll(".nav-item");
+        document.querySelectorAll(".nav-item");
 
 
 
     // remove amarelo de todos
 
-    botoes.forEach(botao=>{
+    botoes.forEach(botao => {
         botao.classList.remove("active");
     });
 
 
 
-    if(secao === "clientes"){
+    if (secao === "clientes") {
 
 
-        secaoCards.style.display="none";
+        secaoCards.style.display = "none";
 
-        clientes.style.display="block";
+        clientes.style.display = "block";
 
 
         botoes[1].classList.add("active");
@@ -380,12 +410,12 @@ function mostrarSecao(secao){
         carregarClientes();
 
 
-    }else{
+    } else {
 
 
-        secaoCards.style.display="block";
+        secaoCards.style.display = "block";
 
-        clientes.style.display="none";
+        clientes.style.display = "none";
 
 
         botoes[0].classList.add("active");
@@ -395,7 +425,7 @@ function mostrarSecao(secao){
 
 }
 
-async function editarCliente(id){
+async function editarCliente(id) {
 
 
     const res = await fetch(
@@ -415,27 +445,27 @@ async function editarCliente(id){
 
 
     document.getElementById("clienteNome").value =
-    cliente.nome;
+        cliente.nome;
 
 
     document.getElementById("clienteEmail").value =
-    cliente.email;
+        cliente.email;
 
 
     document.getElementById("clienteCidade").value =
-    cliente.cidade || "";
+        cliente.cidade || "";
 
 
     document.getElementById("clienteTelefone").value =
-    cliente.telefone || "";
+        cliente.telefone || "";
 
 
 }
 
-async function salvarCliente(){
+async function salvarCliente() {
 
 
-    if(!clienteEditId){
+    if (!clienteEditId) {
 
         alert("Selecione um cliente primeiro");
 
@@ -444,22 +474,22 @@ async function salvarCliente(){
     }
 
 
-    const dados={
+    const dados = {
 
         nome:
-        document.getElementById("clienteNome").value,
+            document.getElementById("clienteNome").value,
 
 
         email:
-        document.getElementById("clienteEmail").value,
+            document.getElementById("clienteEmail").value,
 
 
         cidade:
-        document.getElementById("clienteCidade").value,
+            document.getElementById("clienteCidade").value,
 
 
         telefone:
-        document.getElementById("clienteTelefone").value
+            document.getElementById("clienteTelefone").value
 
     };
 
@@ -468,14 +498,14 @@ async function salvarCliente(){
         `${API}/admin/clientes/${clienteEditId}`,
         {
 
-        method:"PUT",
+            method: "PUT",
 
-        headers:{
-            "Content-Type":"application/json"
-        },
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-        body:
-        JSON.stringify(dados)
+            body:
+                JSON.stringify(dados)
 
         }
     );
@@ -484,29 +514,165 @@ async function salvarCliente(){
     alert("Cliente atualizado");
 
 
-    clienteEditId=null;
+    clienteEditId = null;
 
 
     carregarClientes();
 
 }
 
-async function excluirCliente(id){
+async function excluirCliente(id) {
 
 
-    if(!confirm("Excluir este cliente?"))
-    return;
+    if (!confirm("Excluir este cliente?"))
+        return;
 
 
     await fetch(
         `${API}/admin/clientes/${id}`,
         {
-            method:"DELETE"
+            method: "DELETE"
         }
     );
 
 
     carregarClientes();
+
+
+}
+
+function showLoading() {
+
+    document
+        .getElementById("loadingOverlay")
+        .classList.add("show");
+
+}
+
+function hideLoading() {
+
+    document
+        .getElementById("loadingOverlay")
+        .classList.remove("show");
+
+}
+
+function criarPlaceholders() {
+
+
+    let html = "";
+
+
+    for (let i = 0; i < 6; i++) {
+
+
+        html += `
+
+<div class="card-placeholder">
+
+
+<div class="placeholder-img"></div>
+
+
+<div class="placeholder-title"></div>
+
+
+<div class="placeholder-text"></div>
+
+
+</div>
+
+
+`;
+
+
+    }
+
+
+    return html;
+
+
+}
+
+//redenriza cards no HTML
+async function load() {
+
+
+    const container = document.getElementById("cards");
+
+
+    container.innerHTML = criarPlaceholders();
+
+
+    showLoading();
+
+
+
+    try {
+
+
+        const res = await fetch(API + "/cards");
+
+
+        const cards = await res.json();
+
+
+
+        container.innerHTML = "";
+
+
+
+        cards.forEach(card => {
+
+
+            container.innerHTML += `
+
+            <div class="card-admin">
+
+
+                <img src="${card.imagem}">
+
+
+                <h4>${card.titulo}</h4>
+
+
+                <div class="card-actions">
+
+
+                <button class="edit-btn"
+                onclick="edit(${card.id})">
+                Editar
+                </button>
+
+
+                <button class="delete-btn"
+                onclick="remove(${card.id})">
+                Excluir
+                </button>
+
+
+                </div>
+
+
+            </div>
+
+            `;
+
+
+        });
+
+
+
+    }
+
+
+    finally {
+
+
+        hideLoading();
+
+
+    }
 
 
 }

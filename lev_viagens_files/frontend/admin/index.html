@@ -248,6 +248,172 @@
                 display: block;
             }
         }
+
+        .loading-overlay {
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(255, 255, 255, .75);
+
+            display: none;
+
+            justify-content: center;
+
+            align-items: center;
+
+            flex-direction: column;
+
+            z-index: 999999;
+
+        }
+
+        .loading-overlay.show {
+
+            display: flex;
+
+        }
+
+        .spinner {
+
+            width: 60px;
+
+            height: 60px;
+
+            border: 6px solid #ddd;
+
+            border-top: 6px solid #2f7df6;
+
+            border-radius: 50%;
+
+            animation: spin .8s linear infinite;
+
+        }
+
+        .loading-overlay p {
+
+            margin-top: 20px;
+
+            font-size: 18px;
+
+            font-weight: 600;
+
+        }
+
+        @keyframes spin {
+
+            to {
+
+                transform: rotate(360deg);
+
+            }
+
+        }
+
+        .card-placeholder {
+
+
+            width: 280px;
+
+            height: 350px;
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 15px;
+
+
+        }
+
+
+
+        .card-placeholder div {
+
+
+            background: #e5e5e5;
+
+            border-radius: 8px;
+
+
+            animation: pulse 1.2s infinite;
+
+
+        }
+
+
+
+        .placeholder-img {
+
+
+            height: 180px;
+
+        }
+
+
+
+        .placeholder-title {
+
+
+            height: 20px;
+
+            margin-top: 20px;
+
+
+        }
+
+
+
+        .placeholder-text {
+
+
+            height: 15px;
+
+            margin-top: 15px;
+
+
+        }
+
+
+
+        @keyframes pulse {
+
+
+            0% {
+
+                opacity: .5;
+
+            }
+
+
+            50% {
+
+                opacity: 1;
+
+            }
+
+
+            100% {
+
+                opacity: .5;
+
+            }
+
+
+        }
+
+        #cards {
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+
+            gap: 15px;
+
+            margin-top: 20px;
+
+        }
     </style>
 </head>
 
@@ -388,7 +554,7 @@
 
 
 
-            <button class="save-btn" onclick="saveCard()">
+            <button id="btnSalvar" class="save-btn" onclick="saveCard()">
 
                 Salvar card
 
@@ -543,10 +709,19 @@
     </div>
 
 
+    <div id="loadingOverlay" class="loading-overlay">
+
+        <div class="spinner"></div>
+
+        <p>Carregando...</p>
+
+    </div>
 
 
     <!-- SCRIPT PRINCIPAL -->
     <script src="admin.js"></script>
+
+
 
 </body>
 
