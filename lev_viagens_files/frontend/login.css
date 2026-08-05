@@ -11,14 +11,13 @@
 
 body {
     background: #f4f4f4;
-
     min-height: 100vh;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    padding: 20px;
+    padding: 40px 20px;
 }
 
 /* =========================
@@ -183,17 +182,40 @@ hr {
    MOBILE
 ========================= */
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+
+    body {
+        display: block;
+        padding: 15px;
+    }
 
     .login-container {
+        max-width: 100%;
+        width: 100%;
+        margin: 0 auto;
         border-radius: 14px;
     }
 
+    .login-header {
+        padding: 22px 18px;
+    }
+
     .login-header h1 {
-        font-size: 1.3rem;
+        font-size: 1.35rem;
     }
 
     .section {
-        padding: 15px;
+        padding: 18px;
+    }
+
+    input {
+        padding: 14px;
+        font-size: 16px; /* evita zoom automático do iPhone */
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 14px;
+        font-size: 16px;
     }
 }
