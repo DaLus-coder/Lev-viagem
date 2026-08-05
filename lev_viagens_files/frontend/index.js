@@ -96,7 +96,7 @@ function createCard(card) {
         `;
     }
 
-    if (card.categoria === "experiencias") {
+    if (card.categoria === "gastronomia") {
 
         const mensagem = encodeURIComponent(
             `Olá, tenho interesse em ${card.titulo}`
