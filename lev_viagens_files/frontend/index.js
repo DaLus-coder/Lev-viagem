@@ -80,6 +80,22 @@ function createCard(card) {
         `;
     }
 
+    if (card.categoria === "experiencias") {
+
+        const mensagem = encodeURIComponent(
+            `Olá, tenho interesse em ${card.titulo}`
+        );
+
+        const whatsappUrl =
+            `https://parksnet.com.br/destino/serra-gaucha?bookingAgency=6641`;
+
+        botaoHtml = `
+            <button onclick="window.open('${whatsappUrl}','_blank')">
+                ${card.botao_texto}
+            </button>
+        `;
+    }
+
     div.innerHTML = `
         <img src="${card.imagem}">
         <h3>${card.titulo}</h3>
