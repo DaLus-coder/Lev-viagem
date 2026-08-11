@@ -301,7 +301,7 @@ function renderUser() {
     if (user) {
         area.innerHTML = `
             <span>Olá, ${user.nome}</span>
-            <button onclick="logout()">Sair</button>
+            <button id="logoutBtn" onclick="logout()">Sair</button>
         `;
     } else {
         area.innerHTML = `
