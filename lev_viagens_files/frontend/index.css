@@ -65,7 +65,7 @@ a{
 
 #userArea button {
     padding: 8px 10px;
-    border: 1px solid black;
+    border: 1px solid rgb(130, 130, 130);
     background-color: white;
     border-radius: 5px;
     transition: 0.2s;
