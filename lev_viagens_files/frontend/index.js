@@ -5,15 +5,14 @@ const API = "https://lev-viagem.onrender.com/api";
    INICIALIZAÇÃO GERAL DA PÁGINA
 ========================================================= */
 
-window.addEventListener("load", async () => {
+window.addEventListener("DOMContentLoaded", async () => {
 
-    // Inicializa componentes da UI
     initTabs();
     initMainCarousel();
-    initMiniCarousels(); // carrosséis das abas
+    initMiniCarousels();
 
-    // Carrega dados do CMS
     await loadCMS();
+
 });
 
 
@@ -23,30 +22,62 @@ window.addEventListener("load", async () => {
 
 async function loadCMS() {
 
-    // Busca cards no backend
-    const res = await fetch(API + "/cards");
-    const cards = await res.json();
+    const skeleton = document.getElementById("carouselSkeleton");
 
-    // Mapeamento das categorias para seus containers
-    const maps = {
-        alugueis: document.getElementById("alugueis-track"),
-        experiencias: document.getElementById("experiencias-track"),
-        gastronomia: document.getElementById("gastronomia-track")
-    };
+    // Skeleton aparece imediatamente
+    if (skeleton) {
+        skeleton.classList.remove("hidden");
+    }
 
-    // Limpa containers antes de renderizar
-    Object.values(maps).forEach(el => {
-        if (el) el.innerHTML = "";
-    });
+    try {
 
-    // Distribui cards por categoria
-    cards.forEach(card => {
-        const el = createCard(card);
+        // Busca cards no backend
+        const res = await fetch(API + "/cards");
 
-        if (maps[card.categoria]) {
-            maps[card.categoria].appendChild(el);
+        if (!res.ok) {
+            throw new Error("Erro ao carregar cards");
         }
-    });
+
+        const cards = await res.json();
+
+        // Mapeamento das categorias para seus containers
+        const maps = {
+            alugueis: document.getElementById("alugueis-track"),
+            experiencias: document.getElementById("experiencias-track"),
+            gastronomia: document.getElementById("gastronomia-track")
+        };
+
+        // Limpa containers antes de renderizar
+        Object.values(maps).forEach(el => {
+            if (el) {
+                el.innerHTML = "";
+            }
+        });
+
+        // Distribui cards por categoria
+        cards.forEach(card => {
+
+            const el = createCard(card);
+
+            if (maps[card.categoria]) {
+                maps[card.categoria].appendChild(el);
+            }
+
+        });
+
+    } catch (err) {
+
+        console.error("Erro ao carregar CMS:", err);
+
+    } finally {
+
+        // Remove skeleton quando terminar
+        if (skeleton) {
+            skeleton.classList.add("hidden");
+        }
+
+    }
+
 }
 
 
