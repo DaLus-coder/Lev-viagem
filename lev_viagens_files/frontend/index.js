@@ -253,97 +253,42 @@ function initTabs() {
 }
 
 
-/* =========================================================
+
+/* =========================================
    MENU MOBILE
-========================================================= */
+========================================= */
 
 const menuBtn = document.getElementById("menuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
 
-// abre/fecha menu mobile
 if (menuBtn && mobileMenu) {
-    menuBtn.addEventListener("click", () => {
-        mobileMenu.classList.toggle("active");
+    menuBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+
+        const aberto = mobileMenu.classList.toggle("active");
+
+        menuBtn.setAttribute("aria-expanded", String(aberto));
+
+        menuBtn.innerHTML = aberto
+            ? '<i class="fa-solid fa-xmark"></i>'
+            : '<i class="fa-solid fa-bars"></i>';
     });
-}
 
-// fecha menu ao clicar fora
-document.addEventListener("click", (e) => {
-    if (
-        !mobileMenu.contains(e.target) &&
-        !menuBtn.contains(e.target)
-    ) {
+    mobileMenu.addEventListener("click", (event) => {
+        event.stopPropagation();
+    });
+
+    document.addEventListener("click", () => {
         mobileMenu.classList.remove("active");
-    }
-});
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    });
 
-const user = JSON.parse(localStorage.getItem("user"));
-
-function reservar() {
-
-    if (!user) {
-        alert("Você precisa estar logado");
-        window.location.href = "login.html";
-        return;
-    }
-
-    // continua reserva normalmente
-}
-
-//status login
-function renderUser() {
-
-    const area = document.getElementById("userArea");
-    const user = getUser();
-
-    if (!area) return;
-
-    if (user) {
-        area.innerHTML = `
-            <span>Olá, ${user.nome}</span>
-            <button onclick="logout()">Sair</button>
-        `;
-    } else {
-        area.innerHTML = `
-            <a href="login.html">Minha conta</a>
-        `;
-    }
-}
-
-window.addEventListener("load", renderUser);
-
-function reservar() {
-
-    const user = getUser();
-
-    if (!user) {
-        alert("Você precisa estar logado");
-        window.location.href = "login.html";
-        return;
-    }
-
-    // continua fluxo normal
-}
-
-window.addEventListener("load", () => {
-    renderUser();
-});
-
-function renderUser() {
-
-    const user = getUser();
-    const area = document.getElementById("userArea");
-
-    if (!area) return;
-
-    if (user) {
-        area.innerHTML = `
-            <span>Bem-vindo, ${user.nome}</span>
-            <button onclick="logout()">Sair</button>
-        `;
-    } else {
-        area.innerHTML = `
-            <a href="login.html">Minha conta</a>
-        `;
-    }
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            mobileMenu.classList.remove("active");
+            menuBtn.setAttribute("aria-expanded", "false");
+            menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+        }
+    });
 }
