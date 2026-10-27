@@ -47,13 +47,45 @@
             <div id="userArea"></div>
             <a href="/">Início</a>
             <a href="#alugueis">Aluguéis</a>
-            <a href="#experiencias">Experiências da Serra</a>
-            <a href="#gastronomia">Gastronomia</a>
             <a href="https://parksnet.com.br/destino/serra-gaucha?bookingAgency=6641">
                 Ingressos e atrações
             </a>
+            <a href="#gastronomia">Gastronomia</a>
         </nav>
     </header>
+
+    
+<!-- PAINEL DE PESQUISA -->
+<section id="searchPanel" class="search-panel" hidden>
+    <div class="search-box">
+        <div class="search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="search"
+                id="siteSearchInput"
+                placeholder="O que você procura em Gramado?"
+                autocomplete="off"
+                aria-label="Pesquisar serviços"
+            >
+
+            <button
+                type="button"
+                id="closeSearchBtn"
+                aria-label="Fechar pesquisa"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <p id="searchStatus" class="search-status">
+            Pesquise aluguéis, passeios e gastronomia.
+        </p>
+
+        <div id="searchResults" class="search-results"></div>
+    </div>
+</section>
+
 
 
     <!-- =========================================================
@@ -261,7 +293,7 @@
         <span>Transfer</span>
     </a>
 
-    <a href="#natal-luz" class="bottom-nav-item">
+    <a href="https://parksnet.com.br/natal-luz?bookingAgency=6641" class="bottom-nav-item">
         <span class="nav-icon">
             <i class="fa-solid fa-sleigh"></i>
         </span>
