@@ -5,16 +5,16 @@
 
 
 :root {
-    --cyan: #fbc719;
-    --cyan-dark: #d99f00;
+    --cyan: #f8c109;
+    --cyan-dark: #f4b300;
     --navy: #292929;
     --text-muted: #777777;
     --page-bg: #f7f7f7;
     --white: #ffffff;
 
-    --orange: #FCC024;
-    --orange-dark: #E5AA13;
-    --yellow: #FCC024;
+    --orange: #ffba0b;
+    --orange-dark: #f6b207;
+    --yellow: #fdb90d;
 }
 
 
@@ -66,7 +66,7 @@ img {
     position: relative;
     z-index: 1000;
     width: 100%;
-    min-height: 112px;
+    min-height: 100px;
     padding: 18px clamp(20px, 4vw, 44px);
     display: flex;
     align-items: center;
@@ -80,6 +80,7 @@ img {
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    width: 100px;
 }
 
 .brand-logo img {
