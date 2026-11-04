@@ -5,16 +5,16 @@
 
 
 :root {
-    --cyan: #f28d00;
-    --cyan-dark: #cc6500;
+    --cyan: #FCC024;
+    --cyan-dark: #D99F00;
     --navy: #292929;
     --text-muted: #777777;
     --page-bg: #f7f7f7;
     --white: #ffffff;
 
-    --orange: #f28c00;
-    --orange-dark: #e87500;
-    --yellow: #ffc928;
+    --orange: #FCC024;
+    --orange-dark: #E5AA13;
+    --yellow: #FCC024;
 }
 
 
@@ -72,7 +72,7 @@ img {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    background: linear-gradient(115deg, #e87500, #ffb52e);
+    background: linear-gradient(115deg, #FCC024, #FFDA70);
     box-shadow: 0 2px 8px #00000010;
 }
 
@@ -227,7 +227,7 @@ img {
     width: 23px;
     text-align: center;
 
-    color: #ed8500;
+    color: #D99F00;
     font-size: 17px;
 }
 
@@ -250,9 +250,9 @@ img {
 /* HOVER */
 
 .mobile-menu > a:hover {
-    background: #fff4e6;
-    color: #d96c00;
-    transform: translateX(3px);
+background: #FFF5D9;
+color: #B88600;
+transform: translateX(3px);
 }
 
 /* ÁREA DO USUÁRIO */
@@ -277,8 +277,8 @@ img {
     border: none;
     border-radius: 9px;
 
-    background: linear-gradient(110deg, #e87500, #ffad27);
-    color: #ffffff;
+    background: linear-gradient(110deg, #FCC024, #FFDA70);
+color: #292929;
 
     font-weight: 700;
     transition: filter 200ms ease;
@@ -339,7 +339,7 @@ img {
     display: flex;
     align-items: center;
     color: white;
-    background: linear-gradient(120deg, #e87500, #ffb52e);
+   background: linear-gradient(120deg, #FCC024, #FFDA70);
 }
 
 .hero-content {
@@ -395,7 +395,7 @@ img {
 .card > img {
     display: block;
     width: 100%;
-    height: clamp(240px, 48vw, 480px);
+    height: clamp(300px, 55vw, 560px);
     object-fit: cover;
 }
 
@@ -570,7 +570,7 @@ img {
 .mini-card img {
     display: block;
     width: 100%;
-    height: 190px;
+    height: 230px;
     object-fit: cover;
 }
 
@@ -761,9 +761,9 @@ img {
         padding: 22px 16px;
     }
 
-    .card > img {
-        height: 270px;
-    }
+.card > img {
+    height: 320px;
+}
 
     .card-info {
         padding: 17px;
@@ -774,8 +774,8 @@ img {
     }
 
     .mini-card img {
-        height: 200px;
-    }
+    height: 230px;
+}
 
     .benefits {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -890,13 +890,13 @@ img {
     align-items: center;
     gap: 12px;
     padding: 5px 14px;
-    border: 2px solid #08b5d0;
+    border: 2px solid #FCC024;
     border-radius: 14px;
     background: #fff;
 }
 
 .search-input-wrap > i {
-    color: #08b5d0;
+    color: #D99F00;
     font-size: 20px;
 }
 
@@ -984,7 +984,7 @@ img {
     padding: 9px 13px;
     border: 0;
     border-radius: 8px;
-    background: #08b5d0;
+    background: #FCC024;
     color: white;
     font-weight: 700;
 }
