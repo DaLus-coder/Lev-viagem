@@ -5,8 +5,8 @@
 
 
 :root {
-    --cyan: #FCC024;
-    --cyan-dark: #D99F00;
+    --cyan: #fbc719;
+    --cyan-dark: #d99f00;
     --navy: #292929;
     --text-muted: #777777;
     --page-bg: #f7f7f7;
@@ -72,7 +72,7 @@ img {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    background: linear-gradient(115deg, #FCC024, #FFDA70);
+    background: linear-gradient(115deg, #ffba0a, #ffc936);
     box-shadow: 0 2px 8px #00000010;
 }
 
@@ -339,7 +339,7 @@ color: #292929;
     display: flex;
     align-items: center;
     color: white;
-   background: linear-gradient(120deg, #FCC024, #FFDA70);
+   background: linear-gradient(120deg, #ffbe19, #fecb3f);
 }
 
 .hero-content {
