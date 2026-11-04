@@ -8,13 +8,13 @@ let allCMSCards = [];
 
 window.addEventListener("load", async () => {
 
-    // Inicializa componentes da UI
-    initTabs();
     initMainCarousel();
-    initMiniCarousels(); // carrosséis das abas
 
-    // Carrega dados do CMS
+    // Primeiro carrega os cards do banco
     await loadCMS();
+
+    // Depois inicializa os carrosséis das categorias
+    initMiniCarousels();
 });
 
 
@@ -185,6 +185,10 @@ function initMainCarousel() {
    MINI CARROSSEIS (TABS)
 ========================================================= */
 
+/* =========================================================
+   MINI CARROSSEIS DAS CATEGORIAS
+========================================================= */
+
 function initMiniCarousels() {
 
     const carousels = document.querySelectorAll(".mini-carousel");
@@ -194,44 +198,55 @@ function initMiniCarousels() {
         const track = carousel.querySelector(".mini-track");
         const prev = carousel.querySelector(".prev");
         const next = carousel.querySelector(".next");
+        const windowElement = carousel.querySelector(".mini-window");
 
-        if (!track || !prev || !next) return;
+        if (!track || !prev || !next || !windowElement) return;
 
-        let index = 0;
+        let position = 0;
 
-        // calcula largura real do card
-        function getCardWidth() {
+        function getStep() {
             const card = track.querySelector(".mini-card");
+
             if (!card) return 0;
-            return card.getBoundingClientRect().width + 20; // margem
+
+            const styles = window.getComputedStyle(track);
+            const gap = parseFloat(styles.columnGap) || 20;
+
+            return card.getBoundingClientRect().width + gap;
         }
 
-        // atualiza posição do carrossel
         function update() {
-            const width = getCardWidth();
-            track.style.transform = `translateX(-${index * width}px)`;
+
+            const maxPosition = Math.max(
+                0,
+                track.scrollWidth - windowElement.clientWidth
+            );
+
+            position = Math.min(position, maxPosition);
+            position = Math.max(0, position);
+
+            track.style.transform = `translateX(-${position}px)`;
+
+            prev.disabled = position <= 0;
+            next.disabled = position >= maxPosition;
         }
 
-        // botão anterior
         prev.addEventListener("click", () => {
-            const max = track.children.length - 1;
-            index = Math.max(0, index - 1);
+            position -= getStep();
             update();
         });
 
-        // botão próximo
         next.addEventListener("click", () => {
-            const max = track.children.length - 1;
-            index = Math.min(max, index + 1);
+            position += getStep();
             update();
         });
 
-        // responsividade
         window.addEventListener("resize", update);
 
         update();
     });
 }
+
 
 
 /* =========================================================
