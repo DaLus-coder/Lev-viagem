@@ -1,4 +1,5 @@
 const API = "https://lev-viagem.onrender.com/api";
+let allCMSCards = [];
 
 
 /* =========================================================
@@ -25,7 +26,18 @@ async function loadCMS() {
 
     // Busca cards no backend
     const res = await fetch(API + "/cards");
-    const cards = await res.json();
+
+if (!res.ok) {
+    throw new Error("Não foi possível carregar os serviços.");
+}
+
+const cards = await res.json();
+
+if (!Array.isArray(cards)) {
+    throw new Error("A API não retornou uma lista de serviços.");
+}
+
+allCMSCards = cards;
 
     // Mapeamento das categorias para seus containers
     const maps = {
@@ -253,98 +265,228 @@ function initTabs() {
 }
 
 
-/* =========================================================
+
+/* =========================================
    MENU MOBILE
-========================================================= */
+========================================= */
 
 const menuBtn = document.getElementById("menuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
 
-// abre/fecha menu mobile
 if (menuBtn && mobileMenu) {
-    menuBtn.addEventListener("click", () => {
-        mobileMenu.classList.toggle("active");
+    menuBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+
+        const aberto = mobileMenu.classList.toggle("active");
+
+        menuBtn.setAttribute("aria-expanded", String(aberto));
+
+        menuBtn.innerHTML = aberto
+            ? '<i class="fa-solid fa-xmark"></i>'
+            : '<i class="fa-solid fa-bars"></i>';
+    });
+
+    mobileMenu.addEventListener("click", (event) => {
+        event.stopPropagation();
+    });
+
+    document.addEventListener("click", () => {
+        mobileMenu.classList.remove("active");
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            mobileMenu.classList.remove("active");
+            menuBtn.setAttribute("aria-expanded", "false");
+            menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+        }
     });
 }
 
-// fecha menu ao clicar fora
-document.addEventListener("click", (e) => {
-    if (
-        !mobileMenu.contains(e.target) &&
-        !menuBtn.contains(e.target)
-    ) {
-        mobileMenu.classList.remove("active");
-    }
-});
 
-const user = JSON.parse(localStorage.getItem("user"));
+/* =========================================
+   PESQUISA DE SERVIÇOS
+========================================= */
 
-function reservar() {
+function initSearch() {
+    const searchBtn = document.getElementById("searchBtn");
+    const panel = document.getElementById("searchPanel");
+    const input = document.getElementById("siteSearchInput");
+    const closeBtn = document.getElementById("closeSearchBtn");
+    const results = document.getElementById("searchResults");
+    const status = document.getElementById("searchStatus");
 
-    if (!user) {
-        alert("Você precisa estar logado");
-        window.location.href = "login.html";
+    if (!searchBtn || !panel || !input || !closeBtn ||
+        !results || !status) {
         return;
     }
 
-    // continua reserva normalmente
-}
-
-//status login
-function renderUser() {
-
-    const area = document.getElementById("userArea");
-    const user = getUser();
-
-    if (!area) return;
-
-    if (user) {
-        area.innerHTML = `
-            <span>Olá, ${user.nome}</span>
-            <button onclick="logout()">Sair</button>
-        `;
-    } else {
-        area.innerHTML = `
-            <a href="login.html">Minha conta</a>
-        `;
-    }
-}
-
-window.addEventListener("load", renderUser);
-
-function reservar() {
-
-    const user = getUser();
-
-    if (!user) {
-        alert("Você precisa estar logado");
-        window.location.href = "login.html";
-        return;
+    // Normaliza acentos para pesquisar "gastronomia"
+    // mesmo se o usuário não digitar acentos.
+    function normalize(text) {
+        return String(text || "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .trim();
     }
 
-    // continua fluxo normal
+    
+function openSearch() {
+    panel.hidden = false;
+
+    // Prepara o estado fechado antes de iniciar a transição.
+    panel.classList.remove("search-closing");
+
+    requestAnimationFrame(() => {
+        panel.classList.add("search-visible");
+        input.focus();
+    });
+
+    panel.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+
+    renderResults(input.value);
 }
 
-window.addEventListener("load", () => {
-    renderUser();
-});
+function closeSearch() {
+    if (panel.hidden) return;
 
-function renderUser() {
+    panel.classList.remove("search-visible");
+    panel.classList.add("search-closing");
 
-    const user = getUser();
-    const area = document.getElementById("userArea");
+    input.value = "";
+    results.replaceChildren();
 
-    if (!area) return;
+    status.textContent =
+        "Pesquise aluguéis, passeios e gastronomia.";
 
-    if (user) {
-        area.innerHTML = `
-            <span>Bem-vindo, ${user.nome}</span>
-            <button onclick="logout()">Sair</button>
-        `;
-    } else {
-        area.innerHTML = `
-            <a href="login.html">Minha conta</a>
-        `;
+    // Espera a animação terminar antes de ocultar.
+    window.setTimeout(() => {
+        if (!panel.classList.contains("search-visible")) {
+            panel.hidden = true;
+            panel.classList.remove("search-closing");
+        }
+    }, 350);
+}
+
+
+    function createResult(card) {
+        const article = document.createElement("article");
+        article.className = "search-result";
+
+        const img = document.createElement("img");
+        img.src = card.imagem || "";
+        img.alt = card.titulo || "Serviço";
+        img.loading = "lazy";
+
+        img.addEventListener("error", () => {
+            img.style.display = "none";
+        });
+
+        const info = document.createElement("div");
+        info.className = "search-result-info";
+
+        const title = document.createElement("h3");
+        title.textContent = card.titulo || "Serviço";
+
+        const description = document.createElement("p");
+        description.textContent = card.descricao || "";
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = card.botao_texto || "Ver serviço";
+
+        button.addEventListener("click", () => {
+            const category = normalize(card.categoria);
+            let url = "";
+
+            if (category === "alugueis") {
+                const message = encodeURIComponent(
+                    `Olá, tenho interesse em ${card.titulo}`
+                );
+
+                url = `https://wa.me/5554994049796?text=${message}`;
+            } else if (category === "experiencias") {
+                url = "https://parksnet.com.br/destino/serra-gaucha?bookingAgency=6641";
+            } else if (category === "gastronomia") {
+                url = "https://parksnet.com.br/destino/serra-gaucha?bookingAgency=6641&tab=gastronomia";
+            }
+
+            if (url) {
+                window.open(url, "_blank", "noopener,noreferrer");
+            }
+        });
+
+        info.append(title, description, button);
+        article.append(img, info);
+
+        return article;
     }
+
+    function renderResults(value) {
+        results.replaceChildren();
+
+        const query = normalize(value);
+
+        if (!query) {
+            status.textContent =
+                `${allCMSCards.length} serviços disponíveis. Digite para pesquisar.`;
+            return;
+        }
+
+        const terms = query.split(/\s+/).filter(Boolean);
+
+        const filtered = allCMSCards.filter(card => {
+            const searchableText = normalize([
+                card.titulo,
+                card.descricao,
+                card.categoria
+            ].join(" "));
+
+            return terms.every(term =>
+                searchableText.includes(term)
+            );
+        });
+
+        status.textContent = filtered.length
+            ? `${filtered.length} resultado(s) encontrado(s).`
+            : "Nenhum serviço encontrado.";
+
+        if (!filtered.length) {
+            const empty = document.createElement("p");
+            empty.className = "search-empty";
+            empty.textContent =
+                "Não encontramos esse serviço. Tente outro nome ou categoria.";
+
+            results.appendChild(empty);
+            return;
+        }
+
+        filtered.forEach(card => {
+            results.appendChild(createResult(card));
+        });
+    }
+
+    searchBtn.addEventListener("click", openSearch);
+
+    input.addEventListener("input", () => {
+        renderResults(input.value);
+    });
+
+    closeBtn.addEventListener("click", closeSearch);
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && !panel.hidden) {
+            closeSearch();
+            searchBtn.focus();
+        }
+    });
 }
+
+window.addEventListener("load", initSearch);
 

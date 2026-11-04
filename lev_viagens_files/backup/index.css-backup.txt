@@ -1,520 +1,377 @@
-/* =========================================================
-   RESET GERAL
-========================================================= */
+
+/* =========================================
+   LEV VIAGEM — ESTILO DA PÁGINA INICIAL
+========================================= */
+
+
+:root {
+    --cyan: #f28c00;
+    --cyan-dark: #cc6500;
+    --navy: #292929;
+    --text-muted: #777777;
+    --page-bg: #f7f7f7;
+    --white: #ffffff;
+
+    --orange: #f28c00;
+    --orange-dark: #e87500;
+    --yellow: #ffc928;
+}
+
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 110px;
 }
 
 body {
-    background: #f4f4f4;
+    width: 100%;
+    min-height: 100vh;
+    background: var(--page-bg);
+    color: var(--navy);
+    font-family: Arial, Helvetica, sans-serif;
+    display: block;
+    padding: 0 0 112px;
+    overflow-x: hidden;
 }
 
-a{
+button,
+input {
+    font: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* =========================================
+   CABEÇALHO SUPERIOR
+========================================= */
+
+.mobile-header {
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    min-height: 112px;
+    padding: 18px clamp(20px, 4vw, 44px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background: linear-gradient(115deg, #e87500, #ffb52e);
+    box-shadow: 0 2px 8px #00000010;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.brand-logo img {
+    display: block;
+    width: 155px;
+    max-height: 76px;
+    object-fit: contain;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 3vw, 38px);
+}
+
+.header-icon {
+    width: 44px;
+    height: 48px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--white);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
     text-decoration: none;
-    color: black;
 }
 
+.header-icon:hover {
+    opacity: 0.8;
+}
 
-/* =========================================================
-   HERO (TOPO PRINCIPAL)
-========================================================= */
+.menu-btn {
+    display: inline-flex;
+}
 
-.hero {
-    background: #FFB700;
-    height: 500px;
+/* =========================================
+   MENU SUSPENSO
+========================================= */
+
+
+/* MENU COM ANIMAÇÃO SUAVE */
+
+.mobile-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: min(330px, 88vw);
+    max-height: calc(100vh - 130px);
+    padding: 14px;
 
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+    overflow-y: auto;
 
-    text-align: center;
+    background: #fff;
+    border-radius: 0 0 0 16px;
+    box-shadow: 0 12px 30px #00000025;
 
-    padding-top: 140px;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+
+    transform: translateY(-12px) scale(0.98);
+    transform-origin: top right;
+
+    transition:
+        opacity 280ms ease,
+        transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 350ms;
 }
 
-.hero h1 {
-    font-size: clamp(2.5rem, 10vw, 5rem);
-    font-weight: 800;
-    line-height: 1.05;
-    margin-bottom: 15px;
-    color: rgb(0, 0, 0);
-    z-index: -1000;
+.mobile-menu.active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
 }
 
-.hero p {
-    font-size: clamp(1rem, 3vw, 1.2rem);
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 0 20px;
-    color: #000000;
-    z-index: -1000;
+.mobile-menu a,
+.mobile-menu #userArea {
+    padding: 13px 12px;
+    color: var(--navy);
+    font-size: 15px;
+    text-decoration: none;
+    border-radius: 8px;
 }
 
-/* =========================================================
-   USER NAME AREA
-========================================================= */
+.mobile-menu a:hover {
+    background: #e7faff;
+    color: var(--cyan-dark);
+}
 
 #userArea {
-    font-family: Arial, Helvetica, sans-serif;
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 #userArea button {
-    padding: 8px 10px;
-    border: 1px solid rgb(177, 177, 177);
-    background-color: white;
-    border-radius: 5px;
-    transition: 0.2s;
+    padding: 9px 12px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--cyan);
+    color: white;
 }
 
-#userArea button:hover {
-    padding: 8px 10px;
-    border: 1px solid rgb(255, 255, 255);
-    color: rgb(255, 255, 255);
-    background-color: rgb(255, 0, 0);
+/* =========================================
+   HERO / CARROSSEL PRINCIPAL
+========================================= */
+
+.hero {
+    position: relative;
+    min-height: 240px;
+    padding: 40px 5%;
+    display: flex;
+    align-items: center;
+    color: white;
+    background: linear-gradient(120deg, #e87500, #ffb52e);
 }
 
+.hero-content {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
 
-/* =========================================================
-   CONTEÚDO PRINCIPAL
-========================================================= */
+.hero h1 {
+    margin-bottom: 12px;
+    font-size: clamp(30px, 5vw, 48px);
+}
+
+.hero p {
+    font-size: clamp(16px, 2.5vw, 21px);
+    line-height: 1.5;
+}
 
 .content {
-    position: relative;
-    min-height: 900px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 28px clamp(16px, 3.5vw, 42px);
 }
 
-
-/* =========================================================
-   CARROSSEL PRINCIPAL (CARD FLUTUANTE)
-========================================================= */
-
 .carousel-wrapper {
-    width: 900px;
-    max-width: 90%;
-    margin: auto;
     position: relative;
-    top: -180px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 16px;
 }
 
 .carousel {
+    width: 100%;
     overflow: hidden;
-    border-radius: 35px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, .15);
-
-    
 }
 
 .carousel-track {
     display: flex;
-    transition: transform .5s ease;
+    align-items: stretch;
+    transition: transform 0.4s ease;
+    will-change: transform;
 }
 
-.card {
-    min-width: 100%;
-    background: white;
-
-        padding: 10px 10px;
-
-
-        /* vidro */
-        background: rgba(255, 255, 255, 0.12);
-
-        backdrop-filter: blur(18px);
-        -webkit-backdrop-filter: blur(18px);
-
-        border: 1px solid rgba(255, 255, 255, 0.25);
-
-        /* profundidade */
-        box-shadow:
-            0 15px 40px rgba(0, 0, 0, 0.12),
-            inset 0 1px 0 rgba(255, 255, 255, 0.35);
+.carousel-track > .card {
+    position: relative;
+    flex: 0 0 100%;
+    min-width: 0;
+    overflow: hidden;
+    background: var(--white);
 }
 
-.card img {
+.card > img {
+    display: block;
     width: 100%;
-    height: 420px;
+    height: clamp(240px, 48vw, 480px);
     object-fit: cover;
-    border-radius: 35px;
 }
 
 .card-info {
-    text-align: center;
-    padding: 35px;
+    padding: 22px;
 }
 
 .card-info h2 {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    font-size: clamp(22px, 3vw, 30px);
 }
 
 .card-info p {
-    color: #666;
-    margin-bottom: 25px;
+    margin-bottom: 16px;
+    color: var(--text-muted);
+    line-height: 1.5;
 }
 
-.card-info button {
+.card-info button,
+.mini-card button {
+    padding: 12px 20px;
     border: none;
-    background: #efb400;
+    border-radius: 10px;
+    background: var(--cyan);
     color: white;
-    padding: 16px 40px;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
+    font-weight: 700;
 }
 
-
-/* =========================================================
-   SETAS DO CARROSSEL
-========================================================= */
+.card-info button a {
+    color: inherit;
+    text-decoration: none;
+}
 
 .arrow {
-    width: 60px;
-    height: 60px;
-
-    border: 1px solid rgb(43, 43, 43);
-    border-radius: 50%;
-    background: white;
-
-    box-shadow: 0 5px 20px rgba(0, 0, 0, .15);
-
     position: absolute;
     top: 50%;
+    z-index: 2;
+    width: 44px;
+    height: 44px;
     transform: translateY(-50%);
-
-    cursor: pointer;
-    font-size: 2rem;
-    z-index: 10;
+    border: none;
+    border-radius: 50%;
+    background: var(--cyan);
+    color: white;
+    font-size: 23px;
 }
 
-.left {
-    left: -90px;
+.arrow.left {
+    left: 14px;
 }
 
-.right {
-    right: -90px;
+.arrow.right {
+    right: 14px;
 }
 
-
-/* =========================================================
-   INDICADORES (DOTS)
-========================================================= */
+/* =========================================
+   INDICADORES DO CARROSSEL
+========================================= */
 
 .dots {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    margin-top: -120px;
+    align-items: center;
+    gap: 7px;
+    padding: 22px 0 32px;
 }
 
 .dot {
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
-    background: #ccc;
+    background: #c9cdd1;
+    cursor: pointer;
 }
 
 .dot.active {
-    background: #efb400;
+    width: 14px;
+    height: 14px;
+    background: var(--cyan);
 }
 
-
-/* =========================================================
-   BENEFÍCIOS
-========================================================= */
-
-.benefits {
-    width: 1200px;
-    max-width: 90%;
-    margin: 80px auto;
-
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
-}
-
-.benefit {
-    background: white;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, .05);
-}
-
-.benefit h3 {
-    margin-bottom: 10px;
-}
-
-.benefit p {
-    color: #666;
-}
-
-
-/* =========================================================
-   RESPONSIVO GERAL
-========================================================= */
-
-@media(max-width:768px) {
-
-    .hero h1 {
-        font-size: 3rem;
-    }
-
-    .card img {
-        height: 240px;
-    }
-
-    .left {
-        left: -20px;
-    }
-
-    .right {
-        right: -20px;
-    }
-
-    .hero {
-        height: 650px;
-        padding-top: 170px;
-    }
-
-    .hero-content {
-        position: relative;
-
-        width: min(900px, 100%);
-        margin: 0 auto;
-
-        padding: 30px 30px;
-
-
-        /* vidro */
-        background: rgba(255, 255, 255, 0.12);
-
-        backdrop-filter: blur(18px);
-        -webkit-backdrop-filter: blur(18px);
-
-        border: 1px solid rgba(24, 24, 24, 0.096);
-
-        /* profundidade */
-        box-shadow:
-            0 15px 40px rgba(0, 0, 0, 0.295),
-            inset 0 1px 0 rgba(255, 255, 255, 0.26);
-
-        overflow: hidden;
-    }
-
-    .carousel-wrapper {
-        top: -140px;
-    }
-
-    .card-info {
-        padding: 20px;
-    }
-
-    .card-info h2 {
-        font-size: 1.3rem;
-    }
-
-    .card-info p {
-        font-size: .95rem;
-    }
-
-    .left {
-        left: -10px;
-    }
-
-    .right {
-        right: -10px;
-    }
-}
-
-@media (max-width: 420px) {
-
-    .hero {
-        height: 700px;
-    }
-
-    .hero h1 {
-        font-size: 3.3rem;
-    }
-
-    .hero p {
-        font-size: 1rem;
-    }
-
-    .logo-island {
-        width: 120px;
-        height: 100px;
-    }
-
-    .menu-btn {
-        width: 50px;
-        height: 50px;
-    }
-
-    .carousel-wrapper {
-        width: 95%;
-        top: -120px;
-    }
-
-    .dots {
-        margin-top: -100px;
-    }
-}
-
-@media (max-width: 251px) {
-
-    .hero {
-        height: 700px;
-    }
-
-    .hero h1 {
-        font-size: 2.3rem;
-    }
-
-    .hero p {
-        font-size: 1rem;
-    }
-
-    .logo-island {
-        width: 120px;
-        height: 100px;
-    }
-
-    .menu-btn {
-        width: 50px;
-        height: 50px;
-    }
-
-    .carousel-wrapper {
-        width: 95%;
-        top: -120px;
-    }
-}
-
-
-/* =========================================================
-   HEADER MOBILE
-========================================================= */
-
-.mobile-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9999;
-}
-
-.logo-island {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: 120px;
-    height: 100px;
-
-    background: #F9A002;
-    border-radius: 0 0 25px 25px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.473);
-}
-
-.logo-island img {
-    width: 90px;
-}
-
-.menu-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-
-    width: 55px;
-    height: 55px;
-
-    border: none;
-    border-radius: 50%;
-    background: white;
-
-    font-size: 28px;
-    cursor: pointer;
-
-    z-index: 10001;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.329);
-}
-
-
-.mobile-menu {
-    position: fixed;
-    top: 0;
-    right: -280px;
-
-    width: 280px;
-    height: 100vh;
-
-    background: white;
-    transition: .3s;
-
-    z-index: 10000;
-    padding-top: 120px;
-
-    box-shadow: -10px 0 30px rgba(0, 0, 0, .15);
-}
-
-.mobile-menu.active {
-    right: 0;
-}
-
-.mobile-menu a {
-    display: block;
-    padding: 18px;
-    text-decoration: none;
-    color: #222;
-    font-weight: 600;
-    border-bottom: 1px solid #eee;
-    transition: 0.2s;
-}
-
-.mobile-menu a:hover {
-    background: #858585;
-}
-
-
-/* =========================================================
-   TABS / SEÇÃO DE CONTEÚDO
-========================================================= */
+/* =========================================
+   CATEGORIAS
+========================================= */
 
 .tabs-section {
-    width: 1200px;
-    max-width: 90%;
-    margin: 60px auto;
+    width: 100%;
+    margin-top: 10px;
 }
 
 .tabs-header {
     display: flex;
-    justify-content: center;
-    gap: 25px;
-    margin-bottom: 40px;
+    gap: 10px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.tabs-header::-webkit-scrollbar {
+    display: none;
 }
 
 .tab-btn {
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-weight: 600;
-    padding: 10px;
-    color: #777;
+    flex: 0 0 auto;
+    padding: 12px 20px;
+    border: 1px solid var(--cyan);
+    border-radius: 25px;
+    background: white;
+    color: var(--cyan-dark);
+    font-weight: 700;
 }
 
 .tab-btn.active {
-    color: #012f87;
-    border-bottom: 3px solid #efb400;
+    background: var(--cyan);
+    color: white;
 }
 
 .tab-content {
@@ -525,120 +382,480 @@ a{
     display: block;
 }
 
-
-/* =========================================================
-   MINI CARROSSEL
-========================================================= */
+/* =========================================
+   MINI CARROSSEIS DO CMS
+========================================= */
 
 .mini-carousel {
     position: relative;
-    max-width: 400px;
-    margin: auto;
+    width: 100%;
+    overflow: hidden;
 }
 
 .mini-window {
+    width: 100%;
     overflow: hidden;
 }
 
 .mini-track {
     display: flex;
-    transition: transform .4s ease;
+    align-items: stretch;
+    gap: 20px;
+    padding: 4px 2px 18px;
+    transition: transform 0.35s ease;
     will-change: transform;
 }
 
 .mini-card {
-    min-width: 75%;
-    margin: 0 2.5%;
-
-    background: white;
-    border-radius: 20px;
+    flex: 0 0 calc(33.333% - 14px);
+    min-width: 0;
     overflow: hidden;
-    flex-shrink: 0;
-
-    box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
+    border-radius: 16px;
+    background: white;
+    box-shadow: 0 4px 14px #00000010;
 }
 
 .mini-card img {
+    display: block;
     width: 100%;
-    height: 220px;
+    height: 190px;
     object-fit: cover;
 }
 
 .mini-card h3 {
-    padding: 20px 20px 10px;
+    padding: 15px 15px 8px;
+    font-size: 19px;
 }
 
 .mini-card p {
-    padding: 0 20px;
-    color: #666;
+    padding: 0 15px 16px;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 .mini-card button {
-    margin: 20px;
-    border: none;
-    background: #efb400;
-    color: white;
-    padding: 14px 28px;
-    border-radius: 50px;
-    cursor: pointer;
+    margin: 0 15px 18px;
+    max-width: calc(100% - 30px);
 }
-
-
-/* =========================================================
-   SETAS MINI CARROSSEL
-========================================================= */
 
 .mini-arrow {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-
-    width: 50px;
-    height: 50px;
-
+    top: 42%;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
     border: none;
     border-radius: 50%;
+    background: var(--cyan);
+    color: white;
+    font-size: 20px;
+}
 
+.mini-arrow.prev {
+    left: 8px;
+}
+
+.mini-arrow.next {
+    right: 8px;
+}
+
+/* =========================================
+   BENEFÍCIOS
+========================================= */
+
+.benefits {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 36px;
+}
+
+.benefit {
+    padding: 22px;
+    border-radius: 14px;
     background: white;
-
-    cursor: pointer;
-    z-index: 5;
-
-    box-shadow: 0 5px 20px rgba(0, 0, 0, .15);
+    box-shadow: 0 3px 12px #00000008;
 }
 
-.prev {
-    left: -15px;
+.benefit h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
 }
 
-.next {
-    right: -15px;
+.benefit p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.5;
 }
 
+/* =========================================
+   NAVEGAÇÃO INFERIOR FIXA
+========================================= */
 
-/* =========================================================
-   AJUSTES FINAIS DO CARROSSEL
-========================================================= */
-
-.carousel {
-    overflow: hidden;
+.bottom-nav {
+    position: fixed;
+    z-index: 1100;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
-}
-
-.carousel-track {
+    min-height: 98px;
+    padding: 10px 4px max(10px, env(safe-area-inset-bottom));
     display: flex;
-    transition: transform 0.5s ease;
-    will-change: transform;
+    align-items: center;
+    justify-content: space-around;
+    gap: 2px;
+    background: white;
+    border-top: 1px solid #e8edf0;
+    box-shadow: 0 -3px 14px #00000008;
 }
 
-.card {
-    flex: 0 0 100%;
+.bottom-nav-item {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: var(--cyan);
+    text-decoration: none;
+    text-align: center;
+    font-size: clamp(10px, 1.5vw, 14px);
+    font-weight: 600;
 }
 
-#userArea {
+.nav-icon {
+    width: 48px;
+    height: 46px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    border: 1.5px solid var(--cyan);
+    border-radius: 12px;
+    font-size: 21px;
+    transition: background 0.2s, color 0.2s;
 }
 
+.bottom-nav-item.active .nav-icon {
+    background: var(--cyan);
+    color: white;
+}
+
+.bottom-nav-item:hover {
+    color: var(--cyan-dark);
+}
+
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
+
+@media (min-width: 1000px) {
+    .mobile-header {
+        padding-left: max(5%, calc((100% - 1320px) / 2));
+        padding-right: max(5%, calc((100% - 1320px) / 2));
+    }
+
+    .bottom-nav {
+        min-height: 78px;
+    }
+
+    .bottom-nav-item {
+        flex-direction: row;
+        gap: 10px;
+        font-size: 14px;
+    }
+
+    .nav-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 17px;
+    }
+
+    body {
+        padding-bottom: 90px;
+    }
+}
+
+@media (max-width: 700px) {
+    .mobile-header {
+        min-height: 92px;
+        padding: 14px 4%;
+        gap: 8px;
+    }
+
+    .brand-logo img {
+        width: 118px;
+        max-height: 60px;
+    }
+
+    .header-actions {
+        gap: 9px;
+    }
+
+    .header-icon {
+        width: 34px;
+        height: 42px;
+        font-size: 22px;
+    }
+
+    .hero {
+        min-height: 190px;
+        padding: 28px 22px;
+    }
+
+    .content {
+        padding: 22px 16px;
+    }
+
+    .card > img {
+        height: 270px;
+    }
+
+    .card-info {
+        padding: 17px;
+    }
+
+    .mini-card {
+        flex-basis: 82%;
+    }
+
+    .mini-card img {
+        height: 200px;
+    }
+
+    .benefits {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .benefit {
+        padding: 16px;
+    }
+
+    .bottom-nav {
+        min-height: 88px;
+        padding: 8px 3px max(8px, env(safe-area-inset-bottom));
+    }
+
+    .bottom-nav-item {
+        gap: 5px;
+        font-size: 10px;
+    }
+
+    .nav-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        font-size: 17px;
+    }
+
+    body {
+        padding-bottom: 98px;
+    }
+}
+
+@media (max-width: 380px) {
+    .brand-logo img {
+        width: 100px;
+    }
+
+    .header-actions {
+        gap: 4px;
+    }
+
+    .bottom-nav-item {
+        font-size: 9px;
+    }
+
+    .nav-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 15px;
+    }
+}
+
+
+
+/* =========================================
+   ANIMAÇÃO SUAVE DA PESQUISA
+========================================= */
+
+.search-panel {
+    position: relative;
+    z-index: 900;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 0fr;
+    padding: 0 clamp(16px, 4vw, 42px);
+    opacity: 0;
+    transform: translateY(-12px);
+    pointer-events: none;
+    overflow: hidden;
+    border-bottom: 1px solid transparent;
+
+    transition:
+        grid-template-rows 350ms cubic-bezier(0.22, 1, 0.36, 1),
+        padding 350ms ease,
+        opacity 250ms ease,
+        transform 350ms ease,
+        border-color 350ms ease;
+}
+
+.search-panel.search-visible {
+    grid-template-rows: 1fr;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    border-bottom-color: #e5eaee;
+}
+
+.search-panel[hidden] {
+    display: none;
+}
+
+.search-panel.search-closing {
+    grid-template-rows: 0fr;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    transform: translateY(-12px);
+    pointer-events: none;
+    border-bottom-color: transparent;
+}
+
+.search-box {
+    min-height: 0;
+    overflow: hidden;
+}
+
+
+.search-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 5px 14px;
+    border: 2px solid #08b5d0;
+    border-radius: 14px;
+    background: #fff;
+}
+
+.search-input-wrap > i {
+    color: #08b5d0;
+    font-size: 20px;
+}
+
+.search-input-wrap input {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 12px 0;
+    border: 0;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    color: #202b3a;
+    font-size: 16px;
+}
+
+.search-input-wrap input:focus {
+    border: 0;
+    box-shadow: none;
+}
+
+.search-input-wrap button {
+    flex-shrink: 0;
+    padding: 8px;
+    border: 0;
+    background: transparent;
+    color: #526273;
+    font-size: 20px;
+}
+
+.search-status {
+    padding: 16px 2px 10px;
+    color: #748397;
+    font-size: 14px;
+}
+
+.search-results {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.search-result {
+    min-width: 0;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid #e8edf0;
+    border-radius: 14px;
+    background: #fff;
+}
+
+.search-result img {
+    width: 96px;
+    height: 96px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #f1f3f5;
+}
+
+.search-result-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.search-result-info h3 {
+    margin-bottom: 6px;
+    color: #202b3a;
+    font-size: 16px;
+    overflow-wrap: anywhere;
+}
+
+.search-result-info p {
+    margin-bottom: 10px;
+    color: #748397;
+    font-size: 13px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.search-result-info button {
+    padding: 9px 13px;
+    border: 0;
+    border-radius: 8px;
+    background: #08b5d0;
+    color: white;
+    font-weight: 700;
+}
+
+.search-empty {
+    grid-column: 1 / -1;
+    padding: 24px 10px;
+    color: #748397;
+    text-align: center;
+    line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+    .search-results {
+        grid-template-columns: 1fr;
+    }
+
+    .search-result img {
+        width: 82px;
+        height: 82px;
+    }
+
+    .search-panel {
+        padding: 14px;
+    }
+}

@@ -11,6 +11,10 @@
 
     <link rel="icon" href="logo_lev_new.png" type="image/png">
 
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
     <title>Lev Viagem</title>
 </head>
 
@@ -19,36 +23,82 @@
     <!-- =========================================================
          HEADER MOBILE (LOGO + MENU)
     ========================================================= -->
-    <header class="mobile-header">
 
-        <!-- LOGO CENTRAL (ILHA AMARELA) -->
-        <div class="logo-island">
-            <img src="logo_lev_new.png" alt="LEV Viagem">
+    <header class="mobile-header">
+        <a href="/" class="brand-logo" aria-label="Lev Viagem - Início">
+            <img src="logo_lev_new.png" alt="Lev Viagem">
+        </a>
+
+        <div class="header-actions">
+            <button class="header-icon" id="searchBtn" aria-label="Pesquisar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+
+            <a href="#reservas" class="header-icon" aria-label="Minhas reservas">
+                <i class="fa-solid fa-bag-shopping"></i>
+            </a>
+
+            <button id="menuBtn" class="header-icon menu-btn" aria-label="Abrir menu" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+            </button>
         </div>
 
-        <!-- BOTÃO MENU MOBILE -->
-        <button id="menuBtn" class="menu-btn">☰</button>
-
-        <!-- MENU LATERAL MOBILE -->
         <nav id="mobileMenu" class="mobile-menu">
             <div id="userArea"></div>
-            <a href="">Todos serviços</a>
-            <a href="alugueis/alugueis.html">Alugueis</a>
-            <a href="https://parksnet.com.br/destino/serra-gaucha?bookingAgency=6641">Experiências da serra</a>
-            <a href="https://parksnet.com.br/destino/serra-gaucha?bookingAgency=6641&tab=gastronomia">Gastronomia</a>
+            <a href="/">Início</a>
+            <a href="#alugueis">Aluguéis</a>
+            <a href="https://parksnet.com.br/destino/serra-gaucha?bookingAgency=6641">
+                Ingressos e atrações
+            </a>
+            <a href="#gastronomia">Gastronomia</a>
         </nav>
-
     </header>
+
+    
+<!-- PAINEL DE PESQUISA -->
+<section id="searchPanel" class="search-panel" hidden>
+    <div class="search-box">
+        <div class="search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="search"
+                id="siteSearchInput"
+                placeholder="O que você procura em Gramado?"
+                autocomplete="off"
+                aria-label="Pesquisar serviços"
+            >
+
+            <button
+                type="button"
+                id="closeSearchBtn"
+                aria-label="Fechar pesquisa"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <p id="searchStatus" class="search-status">
+            Pesquise aluguéis, passeios e gastronomia.
+        </p>
+
+        <div id="searchResults" class="search-results"></div>
+    </div>
+</section>
+
+
 
     <!-- =========================================================
          HERO (SEÇÃO PRINCIPAL)
     ========================================================= -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Mais Reservados</h1>
-            <p>Escolha o melhor equipamento para sua aventura.</p>
+            <h1>Lev Viagem</h1>
+            <p>Escolha aquilo que seja confortável para você</p>
         </div>
     </section>
+
+    <h1 style="text-align: center; margin-top: 45px; color: #333;">Mais reservados</h1>
 
     <!-- =========================================================
          CONTEÚDO PRINCIPAL
@@ -73,7 +123,9 @@
                             <h2>Carrinho para bebê</h2>
                             <p>Experiencia e emoção na neve com sua familia!</p>
                             <button>
-                                <a href="https://wa.me/5554994049796?text=Olá,%20tenho%20interesse%20no%20carrinho%20de%20bebê">Alugar agora</a>
+                                <a
+                                    href="https://wa.me/5554994049796?text=Olá,%20tenho%20interesse%20no%20carrinho%20de%20bebê">Alugar
+                                    agora</a>
                             </button>
                         </div>
                     </div>
@@ -205,8 +257,59 @@
 
     </section>
 
+    
+<nav class="bottom-nav" aria-label="Navegação principal">
+    <a href="/" class="bottom-nav-item active">
+        <span class="nav-icon">
+            <i class="fa-solid fa-house"></i>
+        </span>
+        <span>Início</span>
+    </a>
+
+    <a href="https://parksnet.com.br/destino/serra-gaucha?bookingAgency=6641"
+       class="bottom-nav-item">
+        <span class="nav-icon">
+            <i class="fa-solid fa-ticket"></i>
+        </span>
+        <span>Ingressos</span>
+    </a>
+
+    <a href="#experiencias" class="bottom-nav-item">
+        <span class="nav-icon">
+            <i class="fa-solid fa-location-dot"></i>
+        </span>
+        <span>Passeios</span>
+    </a>
+
+    <a href="#gastronomia" class="bottom-nav-item">
+        <span class="nav-icon">
+            <i class="fa-solid fa-champagne-glasses"></i>
+        </span>
+        <span>Gastronomia</span>
+    </a>
+
+    <a href="#transfer" class="bottom-nav-item">
+        <span class="nav-icon">
+            <i class="fa-solid fa-bus"></i>
+        </span>
+        <span>Transfer</span>
+    </a>
+
+    <a href="https://parksnet.com.br/natal-luz?bookingAgency=6641" class="bottom-nav-item">
+        <span class="nav-icon">
+            <i class="fa-solid fa-sleigh"></i>
+        </span>
+        <span>Natal Luz</span>
+    </a>
+</nav>
+
+<script src="auth.js"></script>
+</body>
+</html>
+
+
     <!-- SCRIPT PRINCIPAL -->
-     <script src="auth.js"></script>
+    <script src="auth.js"></script>
     <script src="index.js"></script>
 
 </body>
