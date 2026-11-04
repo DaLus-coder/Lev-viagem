@@ -740,13 +740,13 @@ color: #292929;
 
 @media (max-width: 700px) {
     .mobile-header {
-        min-height: 92px;
+        min-height: 80px;
         padding: 14px 4%;
         gap: 8px;
     }
 
     .brand-logo img {
-        width: 118px;
+        width: 90px;
         max-height: 60px;
     }
 
