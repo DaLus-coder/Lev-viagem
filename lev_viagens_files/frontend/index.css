@@ -357,7 +357,8 @@ color: #292929;
 .hero p {
     font-size: clamp(16px, 2.5vw, 21px);
     line-height: 1.5;
-    color: #000000;
+    color: #003171;
+    margin-top: 10px;
 }
 
 .content {
