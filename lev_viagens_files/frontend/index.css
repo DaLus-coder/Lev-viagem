@@ -361,6 +361,10 @@ color: #292929;
     margin-top: 10px;
 }
 
+.hero img {
+    margin-left: 35px;
+}
+
 .content {
     width: 100%;
     max-width: 1400px;
