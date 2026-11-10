@@ -24,35 +24,56 @@
          HEADER MOBILE (LOGO + MENU)
     ========================================================= -->
 
-    <header class="mobile-header">
-        <a href="/" class="brand-logo" aria-label="Lev Viagem - Início">
-            <img src="logo_lev_new.png" alt="Lev Viagem">
+<header class="mobile-header">
+
+    <!-- LOGO -->
+    <a href="/" class="brand-logo" aria-label="Lev Viagem - Início">
+        <img src="logo_lev_new.png" alt="Lev Viagem">
+    </a>
+
+    <!-- DIVISÓRIA -->
+    <div class="header-divider"></div>
+
+    <!-- FRASE INSTITUCIONAL -->
+    <div class="header-tagline">
+        <p>Tudo para sua viagem<br>em um só lugar.</p>
+        <span></span>
+    </div>
+
+    <!-- ÍCONES -->
+    <div class="header-actions">
+
+        <button class="header-icon" id="searchBtn" aria-label="Pesquisar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+        <a href="#reservas" class="header-icon cart-icon" aria-label="Minhas reservas">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="cart-count">0</span>
         </a>
 
-        <div class="header-actions">
-            <button class="header-icon" id="searchBtn" aria-label="Pesquisar">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
+        <button id="menuBtn" class="header-icon menu-btn"
+            aria-label="Abrir menu" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
-            <a href="#reservas" class="header-icon" aria-label="Minhas reservas">
-                <i class="fa-solid fa-bag-shopping"></i>
-            </a>
+    </div>
 
-            <button id="menuBtn" class="header-icon menu-btn" aria-label="Abrir menu" aria-expanded="false">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-        </div>
+    <!-- MENU -->
+    <nav id="mobileMenu" class="mobile-menu">
+        <div id="userArea"></div>
 
-        <nav id="mobileMenu" class="mobile-menu">
-            <div id="userArea"></div>
-            <a href="/">Início</a>
-            <a href="#alugueis">Aluguéis</a>
-            <a href="https://parksnet.com.br/destino/serra-gaucha?bookingAgency=6641">
-                Ingressos e atrações
-            </a>
-            <a href="#gastronomia">Gastronomia</a>
-        </nav>
-    </header>
+        <a href="/">Início</a>
+        <a href="#alugueis">Aluguéis</a>
+
+        <a href="https://parksnet.com.br/destino/serra-gaucha?bookingAgency=6641">
+            Ingressos e atrações
+        </a>
+
+        <a href="#gastronomia">Gastronomia</a>
+    </nav>
+
+</header>
 
     
 <!-- PAINEL DE PESQUISA -->
@@ -91,12 +112,85 @@
     <!-- =========================================================
          HERO (SEÇÃO PRINCIPAL)
     ========================================================= -->
-    <section class="hero">
-        <div class="hero-content">
-            <img src="img/image_hero.png" alt="Lev Viagem" class="hero-logo" width="200">
-            <p>Tudo para a sua viagem em um só lugar</p>
-        </div>
-    </section>
+
+<section class="services-section">
+
+    <div class="services-heading">
+        <h1>Nossos serviços</h1>
+        <span></span>
+    </div>
+
+    <div class="services-grid">
+
+        <!-- INGRESSOS -->
+        <a href="https://parksnet.com.br/destino/serra-gaucha?bookingAgency=6641"
+           class="service-card">
+
+            <div class="service-icon ticket-icon">
+                <i class="fa-solid fa-ticket"></i>
+            </div>
+
+            <h2>Ingressos</h2>
+            <p>Atrações de<br>Gramado e Canela</p>
+
+            <span class="service-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+            </span>
+
+        </a>
+
+        <!-- ALUGUEL DE ITENS -->
+        <a href="#alugueis" class="service-card">
+
+            <div class="service-icon">
+                <i class="fa-solid fa-baby-carriage"></i>
+            </div>
+
+            <h2>Aluguel<br>de Itens</h2>
+            <p>Carrinho, cadeira<br>de rodas e mais</p>
+
+            <span class="service-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+            </span>
+
+        </a>
+
+        <!-- TRANSFER -->
+        <a href="#transfer" class="service-card">
+
+            <div class="service-icon">
+                <i class="fa-solid fa-bus"></i>
+            </div>
+
+            <h2>Transfer</h2>
+            <p>Porto Alegre<br>↔ Gramado</p>
+
+            <span class="service-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+            </span>
+
+        </a>
+
+        <!-- PASSEIOS -->
+        <a href="#experiencias" class="service-card">
+
+            <div class="service-icon">
+                <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+
+            <h2>Passeios</h2>
+            <p>Experiências<br>incríveis na<br>Serra Gaúcha</p>
+
+            <span class="service-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+            </span>
+
+        </a>
+
+    </div>
+
+</section>
+
 
     <h1 style="text-align: center; margin-top: 45px; color: #333;">Mais reservados</h1>
 

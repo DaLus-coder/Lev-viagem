@@ -93,8 +93,8 @@
     ========================================================= -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Lev Viagem</h1>
-            <p>Escolha aquilo que seja confortável para você</p>
+            <img src="img/image_hero.png" alt="Lev Viagem" class="hero-logo" width="200">
+            <p>Tudo para a sua viagem em um só lugar</p>
         </div>
     </section>
 
@@ -172,59 +172,67 @@
         ===================================================== -->
         <section class="tabs-section">
 
-            <!-- BOTÕES DAS TABS -->
-            <div class="tabs-header">
+            
+<!-- =========================================================
+     CATEGORIAS DE SERVIÇOS
+========================================================= -->
 
-                <button class="tab-btn active" data-tab="alugueis">Aluguéis</button>
-                <button class="tab-btn" data-tab="experiencias">Experiências</button>
-                <button class="tab-btn" data-tab="gastronomia">Gastronomia</button>
+<section class="categories-section">
 
+    <!-- ALUGUÉIS -->
+    <section class="category-section" id="alugueis">
+        <div class="category-header">
+            <h1>Aluguéis</h1>
+        </div>
+
+        <div class="mini-carousel">
+            <button class="mini-arrow prev" aria-label="Anterior">&#10094;</button>
+
+            <div class="mini-window">
+                <div class="mini-track" id="alugueis-track"></div>
             </div>
 
-            <!-- =================================================
-                 TAB: ALUGUEIS
-            ================================================= -->
-            <div class="tab-content active" id="alugueis">
-                <div class="mini-carousel">
-                    <button class="mini-arrow prev">&#10094;</button>
+            <button class="mini-arrow next" aria-label="Próximo">&#10095;</button>
+        </div>
+    </section>
 
-                    <div class="mini-window">
-                        <div class="mini-track" id="alugueis-track"></div>
-                    </div>
 
-                    <button class="mini-arrow next">&#10095;</button>
-                </div>
+    <!-- EXPERIÊNCIAS -->
+    <section class="category-section" id="experiencias">
+        <div class="category-header">
+            <h1 >Experiências</h1>
+        </div>
+
+        <div class="mini-carousel">
+            <button class="mini-arrow prev" aria-label="Anterior">&#10094;</button>
+
+            <div class="mini-window">
+                <div class="mini-track" id="experiencias-track"></div>
             </div>
 
-            <!-- =================================================
-                 TAB: EXPERIENCIAS
-            ================================================= -->
-            <div class="tab-content" id="experiencias">
-                <div class="mini-carousel">
-                    <button class="mini-arrow prev">&#10094;</button>
+            <button class="mini-arrow next" aria-label="Próximo">&#10095;</button>
+        </div>
+    </section>
 
-                    <div class="mini-window">
-                        <div class="mini-track" id="experiencias-track"></div>
-                    </div>
 
-                    <button class="mini-arrow next">&#10095;</button>
-                </div>
+    <!-- GASTRONOMIA -->
+    <section class="category-section" id="gastronomia">
+        <div class="category-header">
+            <h1>Gastronomia</h1>
+        </div>
+
+        <div class="mini-carousel">
+            <button class="mini-arrow prev" aria-label="Anterior">&#10094;</button>
+
+            <div class="mini-window">
+                <div class="mini-track" id="gastronomia-track"></div>
             </div>
 
-            <!-- =================================================
-                 TAB: GASTRONOMIA
-            ================================================= -->
-            <div class="tab-content" id="gastronomia">
-                <div class="mini-carousel">
-                    <button class="mini-arrow prev">&#10094;</button>
+            <button class="mini-arrow next" aria-label="Próximo">&#10095;</button>
+        </div>
+    </section>
 
-                    <div class="mini-window">
-                        <div class="mini-track" id="gastronomia-track"></div>
-                    </div>
-
-                    <button class="mini-arrow next">&#10095;</button>
-                </div>
-            </div>
+</section>
 
         </section>
 
@@ -304,14 +312,9 @@
 </nav>
 
 <script src="auth.js"></script>
-</body>
-</html>
-
-
-    <!-- SCRIPT PRINCIPAL -->
+    <!-- SCRIPTS DO SITE -->
     <script src="auth.js"></script>
     <script src="index.js"></script>
 
 </body>
-
 </html>
