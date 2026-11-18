@@ -1,252 +1,235 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-    <!-- ================= META CONFIG ================= -->
+
+    <!-- =====================================================
+         CONFIGURAÇÕES BÁSICAS DA PÁGINA
+    ====================================================== -->
+
+    <!-- Define a codificação de caracteres. -->
     <meta charset="UTF-8">
+
+    <!-- Permite adaptação do layout em dispositivos móveis. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-     <!-- css defalt link -->
+    <!-- CSS principal do painel administrativo. -->
     <link rel="stylesheet" href="index.css">
 
-    <!-- favicon link -->
+    <!-- =====================================================
+         FAVICON (ÍCONE DA ABA DO NAVEGADOR)
+    ====================================================== -->
+
+    <!-- Ícone SVG incorporado diretamente no HTML.
+         Não necessita de um arquivo externo. -->
     <link rel="icon"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' stroke='black' stroke-width='1.5' d='M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.3l.9-4.6c.1-.4 0-.8-.3-1.1L14 1 7.6 7.4C7.2 7.8 7 8.3 7 8.9V19c0 1.1.9 2 2 2h9c.8 0 1.5-.5 1.8-1.2l3-7c.1-.2.2-.5.2-.8v-1z'/%3E%3C/svg%3E">
 
+    <!-- Título exibido na aba do navegador. -->
     <title>CMS - ViagensLev</title>
+
 </head>
 
 <body>
 
-    <!-- OVERLAY -->
+    <!-- =====================================================
+         OVERLAY DO MENU MOBILE
+    ====================================================== -->
+
+    <!-- Camada escura exibida quando a sidebar está aberta.
+         Também permite fechar o menu ao clicar fora dele. -->
     <div class="overlay" id="overlay"></div>
 
 
-    <!-- MENU MOBILE -->
+    <!-- =====================================================
+         BOTÃO DO MENU MOBILE
+    ====================================================== -->
+
+    <!-- Botão responsável por abrir e fechar a sidebar.
+         Seu funcionamento está definido no admin.js. -->
     <button class="menu-toggle" id="menuToggle">
         ☰
     </button>
 
 
+    <!-- =====================================================
+         SIDEBAR (MENU LATERAL)
+    ====================================================== -->
 
-    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
 
-
+        <!-- Encerra a sessão administrativa. -->
         <button onclick="logoutAdmin()">
             Sair
         </button>
 
-
+        <!-- Identificação do painel administrativo. -->
         <h2>
             CMS ViagensLev
         </h2>
 
-
-
+        <!-- Navegação para a seção de gerenciamento de cards. -->
         <button class="nav-item active" onclick="mostrarSecao('cards')">
-
             Cards
-
         </button>
 
-
-
+        <!-- Navegação para a seção de gerenciamento de clientes. -->
         <button class="nav-item" onclick="mostrarSecao('clientes')">
-
             Clientes
-
         </button>
-
 
     </aside>
 
 
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL DO PAINEL
+    ====================================================== -->
 
-
-
-    <!-- CONTEÚDO -->
     <div class="cms-content">
 
 
-
-
-
-        <!-- =========================
-     SEÇÃO CARDS
-========================= -->
+        <!-- =================================================
+             SEÇÃO DE GERENCIAMENTO DE CARDS
+        ================================================== -->
 
         <div id="secaoCards">
 
-
+            <!-- Título da seção. -->
             <h1>
                 Gerenciar Cards
             </h1>
 
-
-
+            <!-- Campo para inserir o título do card. -->
             <input id="titulo" placeholder="Título">
 
-
-
+            <!-- Campo para inserir a descrição do card. -->
             <input id="descricao" placeholder="Descrição">
 
-
-
-
-
+            <!-- Seleção do arquivo de imagem no dispositivo. -->
             <input type="file" id="file">
 
-
-
+            <!-- Envia a imagem selecionada para o backend.
+                 A URL retornada será inserida no campo imagem. -->
             <button type="button" onclick="uploadImagem()" class="upload-btn">
-
                 Upload imagem
-
             </button>
 
-
-
-
-
+            <!-- Campo que armazena a URL da imagem.
+                 Pode ser preenchido pelo upload ou manualmente. -->
             <input id="imagem">
 
-
-
-
-
+            <!-- Seleção da categoria do card. -->
             <select id="categoria">
-
 
                 <option value="alugueis">
                     Alugueis
                 </option>
 
-
                 <option value="experiencias">
                     Experiencias
                 </option>
-
 
                 <option value="gastronomia">
                     Gastronomia
                 </option>
 
-
             </select>
 
-
-
-
-
+            <!-- Texto que será utilizado no botão do card. -->
             <input id="botao_texto" placeholder="Texto botão">
 
-
-
-
-
+            <!-- Salva um novo card ou atualiza um card existente.
+                 A função saveCard() identifica a operação. -->
             <button id="btnSalvar" class="save-btn" onclick="saveCard()">
-
                 Salvar card
-
             </button>
 
 
-
-
+            <!-- Separador visual entre formulário e listagem. -->
             <hr>
 
 
-
-
-
-            <!-- LISTAGEM DOS CARDS -->
+            <!-- =================================================
+                 LISTAGEM DOS CARDS CADASTRADOS
+            ================================================== -->
 
             <div id="cards">
 
+                <!-- Categoria: Aluguéis. -->
                 <h2>Aluguéis</h2>
+
+                <!-- Os cards desta categoria são inseridos pelo admin.js. -->
                 <div id="listaAlugueis" class="categoria-cards"></div>
 
 
+                <!-- Categoria: Experiências. -->
                 <h2>Experiências</h2>
+
+                <!-- Os cards desta categoria são inseridos pelo admin.js. -->
                 <div id="listaExperiencias" class="categoria-cards"></div>
 
 
+                <!-- Categoria: Gastronomia. -->
                 <h2>Gastronomia</h2>
+
+                <!-- Os cards desta categoria são inseridos pelo admin.js. -->
                 <div id="listaGastronomia" class="categoria-cards"></div>
 
             </div>
 
-
-
         </div>
 
 
+        <!-- =================================================
+             SEÇÃO DE GERENCIAMENTO DE CLIENTES
+        ================================================== -->
 
-
-
-
-
-
-        <!-- =========================
-     SEÇÃO CLIENTES
-========================= -->
-
-
+        <!-- Começa oculta e é exibida pela função mostrarSecao(). -->
         <div id="clientes" style="display:none;">
 
-
-
+            <!-- Título da seção de clientes. -->
             <h1>
                 Clientes cadastrados
             </h1>
 
 
-
+            <!-- =================================================
+                 FORMULÁRIO DE EDIÇÃO DE CLIENTES
+            ================================================== -->
 
             <h2>
                 Editar cliente
             </h2>
 
-
-
-
+            <!-- Campo para editar o nome do cliente. -->
             <input id="clienteNome" placeholder="Nome">
 
-
-
+            <!-- Campo para editar o email do cliente. -->
             <input id="clienteEmail" placeholder="Email">
 
-
-
+            <!-- Campo para editar a cidade do cliente. -->
             <input id="clienteCidade" placeholder="Cidade">
 
-
-
+            <!-- Campo para editar o telefone do cliente. -->
             <input id="clienteTelefone" placeholder="Telefone">
 
-
-
-
-
+            <!-- Salva as alterações do cliente selecionado. -->
             <button class="save-btn" onclick="salvarCliente()">
-
                 Salvar alterações
-
             </button>
 
 
+            <!-- =================================================
+                 TABELA DE CLIENTES CADASTRADOS
+            ================================================== -->
 
-
-
-
-
+            <!-- Exibe os clientes retornados pela API.
+                 As linhas são criadas dinamicamente pelo admin.js. -->
             <table border="1" width="100%" style="margin-top:20px;background:white;">
 
-
-
+                <!-- Cabeçalho da tabela. -->
                 <thead>
-
 
                     <tr>
 
@@ -254,78 +237,71 @@
                             ID
                         </th>
 
-
                         <th>
                             Nome
                         </th>
-
 
                         <th>
                             Email
                         </th>
 
-
                         <th>
                             Cidade
                         </th>
-
 
                         <th>
                             Telefone
                         </th>
 
-
                         <th>
                             Ações
                         </th>
 
-
                     </tr>
-
 
                 </thead>
 
 
-
-
-
+                <!-- Corpo da tabela.
+                     O JavaScript insere os clientes neste elemento. -->
                 <tbody id="listaClientes">
-
 
                 </tbody>
 
-
-
-
-
             </table>
 
-
-
-
         </div>
-
-
-
-
-
 
     </div>
 
 
+    <!-- =====================================================
+         INDICADOR GLOBAL DE CARREGAMENTO
+    ====================================================== -->
+
+    <!-- Overlay utilizado durante operações como:
+         carregamento, salvamento, exclusão e upload. -->
     <div id="loadingOverlay" class="loading-overlay">
 
+        <!-- Animação circular de carregamento. -->
         <div class="spinner"></div>
 
+        <!-- Mensagem exibida durante o carregamento. -->
         <p>Carregando...</p>
 
     </div>
 
 
-    <!-- SCRIPT PRINCIPAL -->
+    <!-- =====================================================
+         JAVASCRIPT PRINCIPAL
+    ====================================================== -->
+
+    <!-- Carrega as funções responsáveis pelo funcionamento
+         do painel administrativo.
+
+         Está posicionado no final do body para garantir
+         que os elementos HTML já estejam disponíveis. -->
     <script src="admin.js"></script>
-
-
 
 </body>
 
