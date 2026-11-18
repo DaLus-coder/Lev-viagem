@@ -1,87 +1,156 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Login CMS - ViagensLev</title>
+    <!-- =====================================================
+         CONFIGURAÇÕES BÁSICAS DA PÁGINA
+    ====================================================== -->
 
-<style>
+    <!-- Define a codificação de caracteres. -->
+    <meta charset="UTF-8">
 
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#f4f4f4;
-    font-family:Arial;
-}
+    <!-- Permite adaptação do layout em dispositivos móveis. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-.login-box{
-    width:350px;
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,.15);
-}
+    <!-- Título exibido na aba do navegador. -->
+    <title>Login CMS - ViagensLev</title>
 
-h1{
-    text-align:center;
-    color:#012f87;
-    margin-bottom:25px;
-}
 
-input{
-    width:100%;
-    padding:12px;
-    margin-bottom:12px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    box-sizing:border-box;
-}
+    <!-- =====================================================
+         CSS INTERNO DA PÁGINA DE LOGIN
+    ====================================================== -->
 
-button{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:8px;
-    background:#efb400;
-    font-weight:bold;
-    cursor:pointer;
-}
+    <style>
 
-button:hover{
-    opacity:.9;
-}
+        /* =================================================
+           CONFIGURAÇÕES GERAIS
+        ================================================== */
 
-</style>
+        /* Centraliza o formulário horizontal e verticalmente.
+           Define o fundo e a fonte padrão da página. */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f4f4f4;
+            font-family: Arial;
+        }
+
+
+        /* =================================================
+           CAIXA PRINCIPAL DE LOGIN
+        ================================================== */
+
+        /* Estrutura visual que envolve o formulário. */
+        .login-box {
+            width: 350px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.15);
+        }
+
+
+        /* =================================================
+           TÍTULO
+        ================================================== */
+
+        /* Estilização do título do painel administrativo. */
+        h1 {
+            text-align: center;
+            color: #012f87;
+            margin-bottom: 25px;
+        }
+
+
+        /* =================================================
+           CAMPOS DE USUÁRIO E SENHA
+        ================================================== */
+
+        /* Aparência padrão dos campos de entrada. */
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+
+        /* =================================================
+           BOTÃO DE LOGIN
+        ================================================== */
+
+        /* Estilização do botão de autenticação. */
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #efb400;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Efeito visual ao passar o mouse sobre o botão. */
+        button:hover {
+            opacity: .9;
+        }
+
+    </style>
 
 </head>
+
 <body>
 
-<div class="login-box">
 
-    <h1>CMS ViagensLev</h1>
+    <!-- =====================================================
+         FORMULÁRIO DE LOGIN ADMINISTRATIVO
+    ====================================================== -->
 
-    <input
-        id="usuario"
-        placeholder="Usuário"
-    >
+    <div class="login-box">
 
-    <input
-        id="senha"
-        type="password"
-        placeholder="Senha"
-    >
+        <!-- Identificação do painel administrativo. -->
+        <h1>CMS ViagensLev</h1>
 
-    <button onclick="loginAdmin()">
-        Entrar
-    </button>
 
-</div>
+        <!-- Campo utilizado para informar o usuário. -->
+        <input
+            id="usuario"
+            placeholder="Usuário"
+        >
 
-<script src="login.js"></script>
+
+        <!-- Campo utilizado para informar a senha.
+             O type=password oculta os caracteres digitados. -->
+        <input
+            id="senha"
+            type="password"
+            placeholder="Senha"
+        >
+
+
+        <!-- Executa a função de autenticação administrativa.
+             A lógica está definida no arquivo login.js. -->
+        <button onclick="loginAdmin()">
+            Entrar
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT DE AUTENTICAÇÃO
+    ====================================================== -->
+
+    <!-- Carrega as funções responsáveis pelo login administrativo. -->
+    <script src="login.js"></script>
 
 </body>
+
 </html>
