@@ -24,41 +24,84 @@ window.addEventListener("load", async () => {
 
 async function loadCMS() {
 
-    // Busca cards no backend
-    const res = await fetch(API + "/cards");
-
-if (!res.ok) {
-    throw new Error("Não foi possível carregar os serviços.");
-}
-
-const cards = await res.json();
-
-if (!Array.isArray(cards)) {
-    throw new Error("A API não retornou uma lista de serviços.");
-}
-
-allCMSCards = cards;
-
-    // Mapeamento das categorias para seus containers
     const maps = {
         alugueis: document.getElementById("alugueis-track"),
         experiencias: document.getElementById("experiencias-track"),
         gastronomia: document.getElementById("gastronomia-track")
     };
 
-    // Limpa containers antes de renderizar
-    Object.values(maps).forEach(el => {
-        if (el) el.innerHTML = "";
-    });
+    try {
 
-    // Distribui cards por categoria
-    cards.forEach(card => {
-        const el = createCard(card);
+        const res = await fetch(API + "/cards");
 
-        if (maps[card.categoria]) {
-            maps[card.categoria].appendChild(el);
+        if (!res.ok) {
+            throw new Error("Erro ao carregar os serviços.");
         }
-    });
+
+        const cards = await res.json();
+
+        if (!Array.isArray(cards)) {
+            throw new Error("Resposta inválida da API.");
+        }
+
+        allCMSCards = cards;
+
+        // Limpa os placeholders
+        Object.values(maps).forEach(el => {
+            if (el) el.replaceChildren();
+        });
+
+        // Distribui os cards nas categorias
+        cards.forEach(card => {
+
+            const container = maps[card.categoria];
+
+            if (container) {
+                container.appendChild(createCard(card));
+            }
+
+        });
+
+        // Mensagens para categorias sem cards
+        Object.entries(maps).forEach(([categoria, container]) => {
+
+            if (!container) return;
+
+            if (!container.children.length) {
+
+                const message = document.createElement("div");
+
+                message.className = "cms-message";
+                message.textContent = "Nenhum serviço disponível nesta categoria.";
+
+                container.appendChild(message);
+            }
+
+        });
+
+    } catch (error) {
+
+        console.error("Erro ao carregar CMS:", error);
+
+        allCMSCards = [];
+
+        Object.values(maps).forEach(container => {
+
+            if (!container) return;
+
+            container.replaceChildren();
+
+            const message = document.createElement("div");
+
+            message.className = "cms-message";
+            message.textContent =
+                "Não foi possível carregar os serviços. Tente novamente mais tarde.";
+
+            container.appendChild(message);
+
+        });
+
+    }
 }
 
 
@@ -217,19 +260,25 @@ function initMiniCarousels() {
 
         function update() {
 
-            const maxPosition = Math.max(
-                0,
-                track.scrollWidth - windowElement.clientWidth
-            );
+    const maxPosition = Math.max(
+        0,
+        track.scrollWidth - windowElement.clientWidth
+    );
 
-            position = Math.min(position, maxPosition);
-            position = Math.max(0, position);
+    position = Math.min(position, maxPosition);
+    position = Math.max(0, position);
 
-            track.style.transform = `translateX(-${position}px)`;
+    track.style.transform = `translateX(-${position}px)`;
 
-            prev.disabled = position <= 0;
-            next.disabled = position >= maxPosition;
-        }
+    // Controla as setas
+    const temMaisConteudo = maxPosition > 1;
+
+    prev.hidden = !temMaisConteudo;
+    next.hidden = !temMaisConteudo;
+
+    prev.disabled = position <= 0;
+    next.disabled = position >= maxPosition;
+}
 
         prev.addEventListener("click", () => {
             position -= getStep();
